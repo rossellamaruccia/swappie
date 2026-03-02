@@ -1,4 +1,4 @@
-import { Form, Row, Col, Button } from "react-bootstrap"
+import { Form, Row, Col } from "react-bootstrap"
 
 function SearchField() {
     return (
@@ -11,9 +11,6 @@ function SearchField() {
               placeholder="Search"
               className=" mr-sm-2"
             />
-          </Col>
-          <Col xs="auto">
-            <Button type="submit">Submit</Button>
           </Col>
         </Row>
       </Form>
