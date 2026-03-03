@@ -1,20 +1,24 @@
-import { Form, Row, Col } from "react-bootstrap"
+import { Form, Col, Button, Row } from "react-bootstrap"
+import { BsSearch } from "react-icons/bs"
 
 function SearchField() {
     return (
-        <>
-      <Form>
-        <Row>
-          <Col xs="auto">
+      <>
+        <Form as={Row}>
+          <Form.Group as={Col}>
             <Form.Control
-              type="text"
+              type="search"
               placeholder="Search"
-              className=" mr-sm-2"
+              className="searchField"
             />
-          </Col>
-        </Row>
-      </Form>
-        </>
+          </Form.Group>
+          <Form.Group as={Col}>
+            <Button type="button" className="searchButton">
+              <BsSearch />
+            </Button>
+          </Form.Group>
+        </Form>
+      </>
     )
 }
 export default SearchField
