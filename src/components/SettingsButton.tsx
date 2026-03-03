@@ -4,7 +4,7 @@ import { VscSettingsGear } from "react-icons/vsc"
 function SettingsButton() {
     return (
       <>
-        <Button>
+        <Button className="settingsButton">
           <VscSettingsGear />
         </Button>
       </>
