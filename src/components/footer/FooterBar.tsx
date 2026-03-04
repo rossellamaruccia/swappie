@@ -1,12 +1,28 @@
-import "C:/Users/All-B/Desktop/Epicode/swappie/src/styles/customs.css"
-import AddButton from "./AddButton"
-import CategoryButton from "./CategoryButton"
+import "../../customs.css"
+import { Container, Row, Col } from "react-bootstrap"
+import { FaGooglePlay } from "react-icons/fa"
+import { FaApple } from "react-icons/fa"
+import CustomLink from "./CustomLink"
 
 function FooterBar() {
   return (
     <>
-      <CategoryButton />
-      <AddButton />
+      <Container fluid>
+        <hr></hr>
+        <Row className="align-items-center">
+          <CustomLink title={{ title: "categories" }} />
+          <CustomLink title={{ title: "categories" }} />
+          <CustomLink title={{ title: "categories" }} />
+        </Row>
+        <hr></hr>
+        <Row>
+          <Col>
+            <p>Download our app: </p>
+              <FaGooglePlay className="mx-2"/>
+              <FaApple />
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

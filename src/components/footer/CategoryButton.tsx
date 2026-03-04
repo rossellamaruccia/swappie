@@ -1,7 +1,18 @@
-import { Button } from "react-bootstrap"
+import { Col, Button } from "react-bootstrap"
+import "../../customs.css"
 
-function CategoryButton() {
-    return <Button> category </Button>
+type Props = {
+  title: { title: string }
+}
+
+function CategoryButton({ title }: Props) {
+  return (
+    <>
+      <Col>
+        <Button>{title.title}</Button>
+      </Col>
+    </>
+  )
 }
 
 export default CategoryButton

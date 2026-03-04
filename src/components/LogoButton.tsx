@@ -1,13 +1,17 @@
-import Image from "react-bootstrap/Image"
+import { Row, Image } from "react-bootstrap"
 import "../customs.css"
 
 function LogoButton() {
   return (
-    <Image
-      src="src\assets\swappie.svg"
-      fluid
-      className="navbar.brand d-inline-block align-top mx-3 logo-small"
-    />
+    <>
+      <Row>
+        <Image
+          src="src\assets\swappie.svg"
+          fluid
+          className="navbar.brand d-inline-block align-top logo-small"
+        />
+      </Row>
+    </>
   )
 }
 
