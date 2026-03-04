@@ -4,7 +4,7 @@ import { VscAccount } from "react-icons/vsc"
 function AccountButton() {
   return (
     <>
-          <Button className="accountButton">
+          <Button className="accountButton" href="/account">
               <VscAccount />
         </Button>
     </>

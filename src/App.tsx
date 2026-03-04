@@ -4,13 +4,21 @@ import { Container } from "react-bootstrap"
 import HeaderBar from "./components/header/HeaderBar"
 import FooterBar from "./components/footer/FooterBar"
 import FeedContainer from "./components/body/FeedContainer"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 function App() {
   return (
     <>
       <Container>
         <HeaderBar />
-        <FeedContainer />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<FeedContainer />} />
+            <Route path="/account" />
+            <Route path="/settings" />
+          </Routes>
+        </BrowserRouter>
+
         <FooterBar />
       </Container>
     </>
