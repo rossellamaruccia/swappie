@@ -1,18 +1,22 @@
 import { Col, Row } from "react-bootstrap";
+import UserThumbnail from "./UserThumbnail";
 
 function FeedElement() {
     return (
-        <>
-            <Row>
-                <Col>
-                    <h1>Image</h1>
-                </Col>
-                <Col>
-                    <Row><h1>Title</h1></Row>
-                    <Row><h1>Description</h1></Row>
-                </Col>
-            </Row>
-        </>
+      <>
+        <Row className="mt-2">
+          <Col sm="3">
+            <img src="https://placecats.com/300/150" />
+          </Col>
+          <Col sm="7">
+            <h3>Title</h3>
+            <p>Description</p>
+          </Col>
+          <Col sm="2">
+            <UserThumbnail />
+          </Col>
+        </Row>
+      </>
     )
 }
 

@@ -7,7 +7,7 @@ import CustomLink from "./CustomLink"
 function FooterBar() {
   return (
     <>
-      <Container fluid>
+      <Container fluid className="mb-2">
         <hr></hr>
         <Row className="align-items-center">
           <CustomLink title={{ title: "categories" }} />
