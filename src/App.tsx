@@ -5,6 +5,7 @@ import HeaderBar from "./components/header/HeaderBar"
 import FooterBar from "./components/footer/FooterBar"
 import FeedContainer from "./components/body/FeedContainer"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import HeroBanner from "./components/hero/HeroBanner"
 
 function App() {
   return (
@@ -13,8 +14,10 @@ function App() {
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<FeedContainer />} />
-            <Route path="/member/signup" />
+            <Route path="/" element={<HeroBanner />} />
+            /* se il login è fatto la homepage è feed */
+            <Route path="/feed" element={<FeedContainer />} />
+            <Route path="/signup" />
             <Route path="/account" />
             <Route path="/settings" />
           </Routes>

@@ -105,11 +105,9 @@ margin: 0 auto;
 .subscribeButton:hover{
   color:green;
 }
-.addButton{
-  font-size: 0.8rem;
-  padding: 0.5rem;
-}
 
-.addButton:hover{
-  color:green;
+.hero{
+  box-sizing: border-box;
+  background-image: url('./assets/pexels-james-frid-81279-12657532.jpg');
+  background-position: top;
 }
