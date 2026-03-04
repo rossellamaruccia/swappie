@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap"
 import { FaGooglePlay } from "react-icons/fa"
 import { FaApple } from "react-icons/fa"
 import CustomLink from "./CustomLink"
+import LogoButton from "../LogoButton"
 
 function FooterBar() {
   return (
@@ -10,16 +11,31 @@ function FooterBar() {
       <Container fluid className="mb-2">
         <hr></hr>
         <Row className="align-items-center">
-          <CustomLink title={{ title: "categories" }} />
-          <CustomLink title={{ title: "categories" }} />
-          <CustomLink title={{ title: "categories" }} />
+          <Col>
+            <CustomLink title={{ title: "Chi siamo" }} />
+            <CustomLink title={{ title: "Da dove veniamo" }} />
+            <CustomLink title={{ title: "Due fiorini" }} />
+          </Col>
+          <Col>
+            <CustomLink title={{ title: "Chi siamo" }} />
+            <CustomLink title={{ title: "Da dove veniamo" }} />
+            <CustomLink title={{ title: "Due fiorini" }} />
+          </Col>
+          <Col>
+            <CustomLink title={{ title: "Chi siamo" }} />
+            <CustomLink title={{ title: "Da dove veniamo" }} />
+            <CustomLink title={{ title: "Due fiorini" }} />
+          </Col>
         </Row>
         <hr></hr>
         <Row>
           <Col>
+            <LogoButton />
+          </Col>
+          <Col className="buttonsCol">
             <p>Download our app: </p>
-              <FaGooglePlay className="mx-2"/>
-              <FaApple />
+            <FaGooglePlay className="mx-2" />
+            <FaApple />
           </Col>
         </Row>
       </Container>

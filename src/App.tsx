@@ -14,6 +14,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<FeedContainer />} />
+            <Route path="/member/signup" />
             <Route path="/account" />
             <Route path="/settings" />
           </Routes>

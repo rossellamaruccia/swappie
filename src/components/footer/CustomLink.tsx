@@ -1,3 +1,5 @@
+import { Row } from "react-bootstrap"
+
 type Props = {
   title: { title: string }
 }
@@ -5,7 +7,9 @@ type Props = {
 function CustomLink({ title }: Props) {
   return (
     <>
-      <a href="">{title.title}</a>
+      <Row>
+        <a href="">{title.title}</a>
+      </Row>
     </>
   )
 }

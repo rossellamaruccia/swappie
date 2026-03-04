@@ -1,4 +1,5 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Carousel, Image } from "react-bootstrap";
+
 import UserThumbnail from "./UserThumbnail";
 
 function FeedElement() {
@@ -6,7 +7,17 @@ function FeedElement() {
       <>
         <Row className="mt-2">
           <Col sm="3">
-            <img src="https://placecats.com/300/150" />
+            <Carousel>
+              <Carousel.Item>
+                <Image src="https://placecats.com/300/200" />
+              </Carousel.Item>
+              <Carousel.Item>
+                <Image src="https://placecats.com/300/200" />
+              </Carousel.Item>
+              <Carousel.Item>
+                <Image src="https://placecats.com/300/200" />
+              </Carousel.Item>
+            </Carousel>
           </Col>
           <Col sm="7">
             <h3>Title</h3>

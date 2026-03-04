@@ -1,4 +1,3 @@
-import { Col, Button } from "react-bootstrap"
 import "../../customs.css"
 
 type Props = {
@@ -8,9 +7,7 @@ type Props = {
 function CategoryButton({ title }: Props) {
   return (
     <>
-      <Col>
-        <Button>{title.title}</Button>
-      </Col>
+      <a href="/category/${title.title}" className="mx-4">{title.title}</a>
     </>
   )
 }
