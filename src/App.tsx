@@ -6,6 +6,8 @@ import FooterBar from "./components/footer/FooterBar"
 import FeedContainer from "./components/body/FeedContainer"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import HeroBanner from "./components/hero/HeroBanner"
+import LoginForm from "./components/signup-page/LoginForm"
+import SubscribeForm from "./components/signup-page/SubscribeForm"
 
 function App() {
   return (
@@ -17,7 +19,8 @@ function App() {
             <Route path="/" element={<HeroBanner />} />
             /* se il login è fatto la homepage è feed */
             <Route path="/feed" element={<FeedContainer />} />
-            <Route path="/signup" />
+            <Route path="/login" element={<LoginForm/>}/>
+            <Route path="/signup" element={<SubscribeForm/>}/>
             <Route path="/account" />
             <Route path="/settings" />
           </Routes>

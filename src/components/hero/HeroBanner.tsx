@@ -4,7 +4,7 @@ function HeroBanner() {
     return (
       <Container fluid className="hero w-100 py-5">
         <Row>
-          <Col className="py-5" xs="8" md="6">
+          <Col className="py-5" xs="9" md="6">
             <Card className="w-75">
               <Card.Body>
                 <Card.Title>Find the swappers around you!</Card.Title>

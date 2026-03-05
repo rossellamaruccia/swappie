@@ -7,7 +7,7 @@ type Props = {
 function CategoryButton({ title }: Props) {
   return (
     <>
-      <a href="/category/${title.title}" className="mx-4">{title.title}</a>
+      <a href="/category/${title.title}" className="me-3 mb-3">{title.title}</a>
     </>
   )
 }
