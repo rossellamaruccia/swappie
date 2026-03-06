@@ -1,8 +1,16 @@
+import { Component } from "react"
 import { Form, Col, Row } from "react-bootstrap"
 import { InputGroup } from "react-bootstrap"
 import { FaSearch } from "react-icons/fa"
 
-function SearchField() {
+class SearchField extends Component {
+  state = {
+    formValue: {
+      searchRequest: "",
+    },
+  }
+
+  render() {
     return (
       <>
         <Form as={Row}>
@@ -12,14 +20,24 @@ function SearchField() {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                type="search"
+                type="text"
                 placeholder="Search"
                 className="formCol"
+                value={this.state.formValue.searchRequest}
+                onChange={(e) => {
+                  this.setState({
+                    formValue: {
+                      ...this.state.formValue,
+                      searchRequest: e.target.value,
+                    },
+                  })
+                }}
               />
             </InputGroup>
           </Form.Group>
         </Form>
       </>
     )
+  }
 }
 export default SearchField

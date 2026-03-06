@@ -22,8 +22,10 @@ class SubscribeForm extends Component {
               value={this.state.formValue.email}
               onChange={(e) => {
                 this.setState({
-                  ...this.state.formValue,
-                  email: e.target.value,
+                  formValue: {
+                    ...this.state.formValue,
+                    email: e.target.value,
+                  },
                 })
               }}
             />
@@ -40,8 +42,10 @@ class SubscribeForm extends Component {
               value={this.state.formValue.password}
               onChange={(e) => {
                 this.setState({
-                  ...this.state.formValue,
-                  password: e.target.value,
+                  formValue: {
+                    ...this.state.formValue,
+                    password: e.target.value,
+                  },
                 })
               }}
             />
@@ -54,8 +58,10 @@ class SubscribeForm extends Component {
               value={this.state.formValue.position}
               onChange={(e) => {
                 this.setState({
-                  ...this.state.formValue,
-                  position: e.target.value,
+                  formValue: {
+                    ...this.state.formValue,
+                    position: e.target.value,
+                  },
                 })
               }}
             />

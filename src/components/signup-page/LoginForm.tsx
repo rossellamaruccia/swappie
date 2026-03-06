@@ -20,10 +20,12 @@ class LoginForm extends Component {
               placeholder="Email address"
               value={this.state.formValue.email}
               onChange={(e) => {
-                this.setState({
-                  ...this.state.formValue,
-                  email: e.target.value,
-                })
+               this.setState({
+                 formValue: {
+                   ...this.state.formValue,
+                   email: e.target.value,
+                 },
+               })
               }}
             />
             <Form.Label>insert the email address you use on Swappie</Form.Label>
@@ -36,8 +38,10 @@ class LoginForm extends Component {
               value={this.state.formValue.password}
               onChange={(e) => {
                 this.setState({
-                  ...this.state.formValue,
-                  password: e.target.value,
+                  formValue: {
+                    ...this.state.formValue,
+                    password: e.target.value,
+                  },
                 })
               }}
             />
