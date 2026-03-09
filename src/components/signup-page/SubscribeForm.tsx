@@ -1,4 +1,5 @@
 import { Component } from "react"
+import { newUser } from "../../api/userApi"
 import { Container, Form, Button } from "react-bootstrap"
 
 class SubscribeForm extends Component {
@@ -8,9 +9,20 @@ class SubscribeForm extends Component {
       surname: "",
       email: "",
       password: "",
-      position: "",
+      city: "",
     },
   }
+
+  handleSubmit = async (event: React.SubmitEvent) => {
+    event.preventDefault()
+    try {
+      const response = await newUser(this.state)
+      console.log(response)
+    } catch (error) {
+      return "Something went wrong: " + error
+    }
+  }
+
   render() {
     return (
       <Container className="hero py-5">
@@ -89,18 +101,22 @@ class SubscribeForm extends Component {
             <Form.Control
               type="text"
               placeholder="City"
-              value={this.state.formValue.position}
+              value={this.state.formValue.city}
               onChange={(e) => {
                 this.setState({
                   formValue: {
                     ...this.state.formValue,
-                    position: e.target.value,
+                    city: e.target.value,
                   },
                 })
               }}
             />
           </Form.Group>
-          <Button className="btn btn-success px-2 py-1 mb-2" type="submit">
+          <Button
+            className="btn btn-success px-2 py-1 mb-2"
+            type="submit"
+            onClick={this.handleSubmit}
+          >
             Subscribe
           </Button>
           <br></br>
