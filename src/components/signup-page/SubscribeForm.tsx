@@ -4,6 +4,8 @@ import { Container, Form, Button } from "react-bootstrap"
 class SubscribeForm extends Component {
   state = {
     formValue: {
+      name: "",
+      surname: "",
       email: "",
       password: "",
       position: "",
@@ -13,7 +15,39 @@ class SubscribeForm extends Component {
     return (
       <Container className="hero py-5">
         <Form className="customForm">
-          <h4>Become a swapper</h4>
+          <h4>Become a swapper!</h4>
+          <Form.Group className="mb-2">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your name"
+              value={this.state.formValue.name}
+              onChange={(e) => {
+                this.setState({
+                  formValue: {
+                    ...this.state.formValue,
+                    name: e.target.value,
+                  },
+                })
+              }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-2">
+            <Form.Label>Surname</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your surname"
+              value={this.state.formValue.surname}
+              onChange={(e) => {
+                this.setState({
+                  formValue: {
+                    ...this.state.formValue,
+                    surname: e.target.value,
+                  },
+                })
+              }}
+            />
+          </Form.Group>
           <Form.Group className="mb-2">
             <Form.Label>Email address</Form.Label>
             <Form.Control
