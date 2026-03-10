@@ -22,7 +22,7 @@ export async function newUser(data: UserPostRequest): Promise<UserResponse> {
   }
 }
 
-export async function loginUser(data: UserLogin): Promise<AuthToken> {
+export async function loggingUser(data: UserLogin): Promise<AuthToken> {
   try {
     const response = await fetch(API_BASE_URL + "/auth/login", {
       method: "POST",
@@ -31,7 +31,6 @@ export async function loginUser(data: UserLogin): Promise<AuthToken> {
       },
       body: JSON.stringify(data),
     })
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
