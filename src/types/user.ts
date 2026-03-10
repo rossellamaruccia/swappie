@@ -1,4 +1,3 @@
-// UserProfile interface matching the API response
 export interface UserPostRequest {
   name: string
   surname: string
