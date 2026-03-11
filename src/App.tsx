@@ -8,17 +8,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import HeroBanner from "./components/hero/HeroBanner"
 import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
-import { useSelector } from "react-redux"
+
 
 function App() {
-const authToken = useSelector((state) => state.main.authToken)
+
+  const authToken = () => {
+  return localStorage.getItem("accessToken")
+}
+  
   return (
     <>
       <Container>
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            {authToken == "" ? (
+            {authToken() == null ? (
               <Route path="/" element={<HeroBanner />} />
             ) : (
               <Route path="/" element={<FeedContainer />} />

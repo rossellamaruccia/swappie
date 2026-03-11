@@ -1,15 +1,18 @@
 import React, { useState } from "react"
-import { useDispatch } from "react-redux"
 import { Container, Form, Button } from "react-bootstrap"
 import { loggingUser } from "../../api/userApi"
 
 const LoginForm = () => {
-  const dispatch = useDispatch()
   const [formValue, setFormValue] = useState({ email: "", password: "" })
 
-  const handleSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault()
-    dispatch({ type: "login_success", payload: loggingUser(formValue) })
+  const handleSubmit = async (event: React.SubmitEvent) => {
+    event.preventDefault()
+    try {
+      loggingUser(formValue)
+      console.log("done")
+    } catch(error) {
+       return "Something went wrong: " + error
+    }
   }
 
   return (
@@ -42,7 +45,6 @@ const LoginForm = () => {
         <Button
           className="btn btn-success px-2 py-1 mb-2"
           type="submit"
-          href="/feed"
         >
           Login
         </Button>
