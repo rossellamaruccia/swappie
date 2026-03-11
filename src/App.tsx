@@ -9,18 +9,26 @@ import HeroBanner from "./components/hero/HeroBanner"
 import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
 
+
 function App() {
+
+  const authToken = () => {
+  return localStorage.getItem("accessToken")
+}
+  
   return (
     <>
       <Container>
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HeroBanner />} />
-            /* se il login è fatto la homepage è feed */
-            <Route path="/feed" element={<FeedContainer />} />
-            <Route path="/login" element={<LoginForm/>}/>
-            <Route path="/signup" element={<SubscribeForm/>}/>
+            {authToken() == null ? (
+              <Route path="/" element={<HeroBanner />} />
+            ) : (
+              <Route path="/" element={<FeedContainer />} />
+            )}
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/signup" element={<SubscribeForm />} />
             <Route path="/account" />
             <Route path="/settings" />
           </Routes>
