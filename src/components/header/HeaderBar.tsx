@@ -1,14 +1,19 @@
 import "../../customs.css"
 import LogoButton from "../LogoButton"
 import SearchField from "../SearchField"
-import SettingsButton from "../SettingsButton"
+import SettingsButton from "./SettingsButton"
 import { Container, Row, Col, Navbar } from "react-bootstrap"
 import SubscribeButton from "./SubscribeButton"
 import AddButton from "./AddButton"
 import HelpButton from "./HelpButton"
 import CategoryButton from "../footer/CategoryButton"
+import AccountButton from "./AccountButton"
 
 function HeaderBar() {
+const authToken = () => {
+  return localStorage.getItem("accessToken")
+}
+
   return (
     <Navbar expand="md">
       <Container fluid className="nav navbar">
@@ -20,7 +25,7 @@ function HeaderBar() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Col className="buttonsCol">
-                <SubscribeButton />
+                {authToken == null ? <SubscribeButton /> : <AccountButton />}
                 <AddButton />
                 <SettingsButton />
                 <HelpButton />
@@ -28,10 +33,10 @@ function HeaderBar() {
             </Navbar.Collapse>
           </Col>
 
-          <Col xs="12" md="6">
+          <Col xs="3" md="6">
             <SearchField />
           </Col>
-          <Col xs="12" md={{ order: 3}}>
+          <Col xs="9" md={{ order: 3 }}>
             <CategoryButton title={{ title: "work tools" }} />
             <CategoryButton title={{ title: "house maintenance diy" }} />
             <CategoryButton title={{ title: "gardening" }} />

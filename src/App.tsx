@@ -8,13 +8,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import HeroBanner from "./components/hero/HeroBanner"
 import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
+import AccountContainer from "./components/account-page/AccountContainer"
 
 
 function App() {
 
-  const authToken = () => {
-  return localStorage.getItem("accessToken")
-}
+const authToken = localStorage.getItem("accessToken")
   
   return (
     <>
@@ -22,14 +21,14 @@ function App() {
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            {authToken() == null ? (
+            {authToken == null ? (
               <Route path="/" element={<HeroBanner />} />
             ) : (
               <Route path="/" element={<FeedContainer />} />
             )}
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SubscribeForm />} />
-            <Route path="/account" />
+            <Route path="/account" element={<AccountContainer />} />
             <Route path="/settings" />
           </Routes>
         </BrowserRouter>

@@ -61,3 +61,28 @@ export async function loggingUser(payload: UserLogin): Promise<string> {
     throw error
   }
 }
+
+export async function getUserInfo(token: string | null): Promise<UserResponse> {
+  if (!token) {
+    console.error("No token provided")
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/me`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (response.ok) {
+      const data: UserResponse = await response.json()
+      console.log("User Data:", data)
+      return data
+    } else throw new Error("Login failed")
+  } catch (error) {
+    console.error("Network or parsing error:", error)
+    throw error
+  }
+}

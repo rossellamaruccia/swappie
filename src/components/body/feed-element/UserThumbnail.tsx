@@ -1,4 +1,4 @@
-import AccountButton from "../../AccountButton"
+import AccountButton from "../../header/AccountButton"
 import { Row, Col } from "react-bootstrap"
 
 function UserThumbnail() {
