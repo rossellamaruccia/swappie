@@ -19,7 +19,7 @@ export interface UserResponse {
   surname: string
   email: string
   city: string
-  image?: string
+  profilePic: string | null
   items: Item[]
 }
 
@@ -28,6 +28,7 @@ export interface Item {
   title: string
   description: string
   pics: string[]
+  user: string
 }
 
 export interface UpdatedUserProfile {

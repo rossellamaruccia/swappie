@@ -135,3 +135,16 @@ margin: 0 auto;
 h4{
   text-align: center;
 }
+
+.dummy-profile-pic{
+  width: 150px;
+  height: 150px;
+  border-radius: 50px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: grey;
+  background-image: url(/src/assets/pexels-wordsurfer-909256.jpg);
+  background-size:contain;
+  border: darkgray;
+  box-shadow: #333 1px ;
+}

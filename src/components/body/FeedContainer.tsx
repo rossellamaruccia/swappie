@@ -1,6 +1,6 @@
 import { Container, Row} from "react-bootstrap"
-import FeedElement from "./feed-element/FeedElement"
 import { Component } from "react"
+import ItemElement from "./feed-element/ItemElement"
 
 class FeedContainer extends Component {
 
@@ -36,9 +36,9 @@ class FeedContainer extends Component {
             <Row>
               <h4>What's new around you:</h4>
                     <hr></hr>
-                    {
-                        this.state.fetchData.elements.map((object) => { return(<FeedElement objectProp={{ object }} key={object.id} />)})
-                    }
+                    {/* {
+                        this.state.fetchData.elements.map((object) => { return(<ItemElement objectProp={{ object }} key={object.id} />)})
+                    } */}
             </Row>
           </Container>
         )

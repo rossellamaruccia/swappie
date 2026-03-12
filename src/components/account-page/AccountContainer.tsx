@@ -3,33 +3,33 @@ import { Container, Row, Col, Button } from "react-bootstrap"
 import { getUserInfo } from "../../api/userApi"
 import type { UserResponse } from "../../types/user"
 import type { UserState } from "../../types/user"
+import ItemElement from "../body/feed-element/ItemElement"
 
 class AccountContainer extends Component {
-
   authToken = localStorage.getItem("accessToken")
 
-  state : UserState = {
+  state: UserState = {
     user: {
       id: "",
       name: "",
       surname: "",
       email: "",
       city: "",
-      image: "",
+      profilePic: "",
       items: [],
     },
     isLoading: true,
-    error: null
+    error: null,
   }
 
-    async componentDidMount() {
-        try {
-          const data: UserResponse = await getUserInfo(this.authToken)
-          this.setState({ user: data, isLoading: false })
-        } catch (error) {
-          this.setState({ error: true, isLoading: false })
-          console.log("Something went wrong" + error)
-        }
+  async componentDidMount() {
+    try {
+      const data: UserResponse = await getUserInfo(this.authToken)
+      this.setState({ user: data, isLoading: false })
+    } catch (error) {
+      this.setState({ error: true, isLoading: false })
+      console.log("Something went wrong" + error)
+    }
   }
 
   render() {
@@ -38,26 +38,50 @@ class AccountContainer extends Component {
     if (isLoading) return <div>Loading user profile...</div>
     //error
     else if (error) return <div>Error: {error}</div>
-    else return (
-      <>
-        <Container fluid>
-          <Row>
-            <Col xs="3">
-              <img src={this.state.user.image} />
-            </Col>
-            <Col xs="7">
-              <h3>{this.state.user.name}</h3>
-              <h5>{this.state.user.city}</h5>
-            </Col>
-            <Col>
-              <Button className="btn" href="/editProfile">
-                edit profile
-              </Button>
-            </Col>
-          </Row>
-        </Container>
-      </>
-    )
+    else if (user)
+      return (
+        <>
+          <Container fluid className="justify-content-center">
+            <Row>
+              <Col xs="3" className="text-center">
+                {user.profilePic == null ? (
+                  <>
+                    <div className="dummy-profile-pic"></div>
+                    <a href="/account/edit"> update your profile picture</a>
+                  </>
+                ) : (
+                  <img src={user.profilePic} />
+                )}
+              </Col>
+              <Col xs="7">
+                <h3>
+                  {user.name} {user.surname}
+                </h3>
+                <h5>{user.city}</h5>
+                <Button className="btn btn-success p-1">
+                  Send me a message
+                </Button>
+              </Col>
+              <Col>
+                <Button className="btn btn-warning p-1" href="/editProfile">
+                  edit profile
+                </Button>
+                <Button className="btn btn-danger p-1 m-1">
+                  Delete profile
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h3>Your items</h3>
+                {user.items.map((item) => (
+                  <ItemElement title={item.title} description={item.description} id={item.id} pics={item.pics} user={item.user} />
+                ))}
+              </Col>
+            </Row>
+          </Container>
+        </>
+      )
   }
 }
 
