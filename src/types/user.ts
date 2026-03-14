@@ -1,3 +1,5 @@
+import type { UUID } from "crypto"
+
 export interface UserPostRequest {
   name: string
   surname: string
@@ -14,7 +16,7 @@ export interface UserState {
 }
 
 export interface UserResponse {
-  id: string
+  id: UUID | string | null
   name: string
   surname: string
   email: string
@@ -24,7 +26,6 @@ export interface UserResponse {
 }
 
 export interface Item {
-  id: string
   title: string
   description: string
   pics: string[]
@@ -41,7 +42,7 @@ export interface UpdatedUserProfile {
 }
 
 export interface UpdateProfileImage {
-  userId?: string
+  userId?: UUID
   image?: File
 }
 

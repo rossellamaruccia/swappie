@@ -1,39 +1,39 @@
 import { Component } from "react"
-import { getUserInfo } from "../../../api/userApi"
+//import { getUserInfo } from "../../../api/userApi"
 import AccountButton from "../../header/AccountButton"
 import { Row, Col } from "react-bootstrap"
 import type { UserResponse } from "../../../types/user"
 
 type MyProps = {
-  user_id: string
+  user: UserResponse | null
 }
 type MyState = {
-  name: string
-  surname: string
-  city: string
+  name: string | undefined
+  surname: string | undefined
+  city: string | undefined
 }
 
 class UserThumbnail extends Component<MyProps, MyState> {
   state : MyState = {
-    name: "",
-    surname: "",
-    city: ""
+    name: this.props.user?.name,
+    surname: this.props.user?.surname,
+    city: this.props.user?.city
   }
   
-  async componentDidMount() {
-    try{
-      const data: UserResponse = await getUserInfo(this.props.user_id)
-      this.setState({
-        ...this.state,
-        name: data.name,
-        surname: data.surname,
-        city: data.city
-      })
-    }
-    catch{
-      throw new Error
-    }
-  }
+  // async componentDidMount() {
+  //   try{
+  //     const data: UserResponse = await getUserInfo(this.props.user)
+  //     this.setState({
+  //       ...this.state,
+  //       name: data.name,
+  //       surname: data.surname,
+  //       city: data.city
+  //     })
+  //   }
+  //   catch{
+  //     throw new Error
+  //   }
+  // }
   
   render(){
     return (

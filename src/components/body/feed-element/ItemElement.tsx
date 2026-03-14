@@ -20,7 +20,7 @@ function ItemElement(props: Item) {
           <p>{props.description}</p>
         </Col>
         <Col sm="2">
-          <UserThumbnail user_id={props.user} />
+          <UserThumbnail user={props.user} />
         </Col>
       </Row>
     </>

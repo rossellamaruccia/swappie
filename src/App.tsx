@@ -9,6 +9,7 @@ import HeroBanner from "./components/hero/HeroBanner"
 import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
 import AccountContainer from "./components/account-page/AccountContainer"
+import AddForm from "./components/add-page/AddForm"
 
 
 function App() {
@@ -29,6 +30,7 @@ const authToken = localStorage.getItem("accessToken")
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SubscribeForm />} />
             <Route path="/account" element={<AccountContainer />} />
+            <Route path="/add" element={<AddForm />} />
             <Route path="/settings" />
           </Routes>
         </BrowserRouter>

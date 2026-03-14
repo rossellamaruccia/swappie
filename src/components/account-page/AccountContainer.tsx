@@ -10,7 +10,7 @@ class AccountContainer extends Component {
 
   state: UserState = {
     user: {
-      id: "",
+      id: null,
       name: "",
       surname: "",
       email: "",
@@ -75,7 +75,7 @@ class AccountContainer extends Component {
               <Col>
                 <h3>Your items</h3>
                 {user.items.map((item) => (
-                  <ItemElement title={item.title} description={item.description} id={item.id} pics={item.pics} user={item.user} />
+                  <ItemElement title={item.title} description={item.description} pics={item.pics} user={item.user} />
                 ))}
               </Col>
             </Row>
