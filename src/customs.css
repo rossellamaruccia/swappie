@@ -1,43 +1,43 @@
-div{
+div {
   width: 100%;
   padding: 0;
   margin: 0 auto;
 }
 
-a{
+a {
   color: darkgray;
   text-decoration: none;
 }
 
-a:hover{
+a:hover {
   color: black;
 }
 
-.container{
+.container {
   margin: 0 auto;
   padding: 0;
   width: 100%;
 }
 
-:root{
-margin: 0 auto;
+:root {
+  margin: 0 auto;
   padding: 0;
   width: 100%;
 }
 
-.row{
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}
-
-.col{
+.row {
   padding: 0;
   margin: 0;
   width: 100%;
 }
 
-.btn{
+.col {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.btn {
   margin: 0;
   padding: 0;
 }
@@ -52,11 +52,11 @@ margin: 0 auto;
   justify-content: center;
 }
 
-.logo-small{
+.logo-small {
   max-width: 6rem;
 }
 
-.navbar{
+.navbar {
   position: sticky;
   width: 100%;
 }
@@ -70,13 +70,41 @@ margin: 0 auto;
   margin-left: 40%;
 }
 
-.navbar-collapse .btn {
+.icon-container {
   color: #333;
   background-color: transparent;
   margin: 0 auto;
+  position: relative;
+  display: inline;
+  cursor: help;
 }
 
-.formCol{
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 14px;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  z-index: 1;
+}
+
+.icon-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.formCol {
   border: none;
   background-color: gainsboro;
   width: 100%;
@@ -84,12 +112,11 @@ margin: 0 auto;
   text-align: center;
 }
 
-.buttonsCol{
+.buttonsCol {
   text-align: end;
-  
 }
 
-.settingsButton{
+.settingsButton {
   background: white;
   color: black;
   border: none;
@@ -98,7 +125,7 @@ margin: 0 auto;
   padding: 10px;
 }
 
-.settingsButton:hover{
+.settingsButton:hover {
   background: white;
   color: black;
   border: none;
@@ -106,22 +133,22 @@ margin: 0 auto;
   font-size: large;
 }
 
-.subscribeButton{
+.subscribeButton {
   font-size: 0.8rem;
   padding: 0.5rem;
 }
 
-.subscribeButton:hover{
-  color:green;
+.subscribeButton:hover {
+  color: green;
 }
 
-.hero{
+.hero {
   box-sizing: border-box;
-  background-image: url('./assets/pexels-james-frid-81279-12657532.jpg');
+  background-image: url("./assets/pexels-james-frid-81279-12657532.jpg");
   background-position: top;
 }
 
-.customForm{
+.customForm {
   background-color: white;
   border: none;
   border-radius: 10px;
@@ -132,19 +159,37 @@ margin: 0 auto;
   color: darkgreen;
 }
 
-h4{
+h4 {
   text-align: center;
 }
 
-.dummy-profile-pic{
-  width: 150px;
-  height: 150px;
-  border-radius: 50px;
+.dummy-profile-pic {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  border: green solid 1px;
   margin: 0 auto;
   padding: 0;
   background-color: grey;
   background-image: url(/src/assets/pexels-wordsurfer-909256.jpg);
-  background-size:contain;
+  background-size: contain;
   border: darkgray;
-  box-shadow: #333 1px ;
+  box-shadow: #333 2px;
+}
+
+.profilePic {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  border: green solid 5px;
+  margin: 0 auto;
+  padding: 0;
+  box-shadow: #333 2px;
+}
+
+.item_img_preview {
+margin: 0;
+display: block;
+ max-width: 100px;
+ max-height: 100px;
 }

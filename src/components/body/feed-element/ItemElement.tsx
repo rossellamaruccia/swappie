@@ -1,26 +1,29 @@
-import { Col, Row, Carousel, Image } from "react-bootstrap"
-import type { Item } from "../../../types/user"
-import UserThumbnail from "./UserThumbnail"
+import { Col, Row} from "react-bootstrap"
 
-function ItemElement(props: Item) {
+interface Props {
+  pics: string[] | null
+  title: string
+  description: string
+  user_name: string
+  user_surname: string
+  user_city: string
+}
+function ItemElement(props: Props) {
   return (
     <>
       <Row className="mt-2">
-        <Col sm="3">
-          <Carousel>
-            {props.pics.map((pic) => (
-              <Carousel.Item>
-                <Image src={pic} />
-              </Carousel.Item>
-            ))}
-          </Carousel>
+        <Col>
+          <img src={props.pics?.[0]} className="item_img_preview" />
         </Col>
-        <Col sm="7">
+        <Col>
           <h3>{props.title}</h3>
           <p>{props.description}</p>
         </Col>
-        <Col sm="2">
-          <UserThumbnail user={props.user} />
+        <Col>
+          <p>
+            {props.user_name} {props.user_surname}
+          </p>
+          <p>{props.user_city}</p>
         </Col>
       </Row>
     </>

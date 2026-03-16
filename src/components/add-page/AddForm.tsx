@@ -1,9 +1,10 @@
 import { Component } from "react"
-import { Form, Button, Container } from "react-bootstrap"
+import { Form, Button, Container, Alert } from "react-bootstrap"
 import type { Item } from "../../types/user"
 import type { UserResponse } from "../../types/user"
 import { addNewItem } from "../../api/itemApi"
 import { getUserInfo } from "../../api/userApi"
+import LoginForm from "../account-page/LoginForm"
 
 interface FormState {
   item: Item
@@ -17,7 +18,7 @@ class AddForm extends Component {
     item: {
       title: "",
       description: "",
-      pics: [],
+      pics: null,
       user: "",
     },
     loading: false,
@@ -57,86 +58,96 @@ class AddForm extends Component {
   }
 
   render() {
-    return (
-      <Container>
-        <h2>Upload Item</h2>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Item title</Form.Label>
-            <Form.Control
-              type="text"
-              name="title"
-              value={this.state.item.title}
-              onChange={(e) => {
-                this.setState({
-                  item: {
-                    ...this.state.item,
-                    title: e.target.value,
-                  },
-                })
-              }}
-              placeholder="Enter item title"
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="description"
-              value={this.state.item.description}
-              onChange={(e) => {
-                this.setState({
-                  item: {
-                    ...this.state.item,
-                    description: e.target.value,
-                  },
-                })
-              }}
-              rows={3}
-              placeholder="Enter item description"
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>Upload Files (Max 5)</Form.Label>
-            <Form.Control
-              type="file"
-              multiple
-              isInvalid={!!this.state.error}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const fileList = e.target.files
-                if (fileList && fileList.length > 5) {
+    if (this.authToken == "")
+      return (
+        <>
+          <Alert className="w-100 text-center">
+            Logged out. Please log in again to add a new item!
+          </Alert>
+          <LoginForm />
+        </>
+      )
+    else
+      return (
+        <Container>
+          <h2>Upload Item</h2>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Item title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={this.state.item.title}
+                onChange={(e) => {
                   this.setState({
-                    error: `You can only upload a maximum of 5 images.`,
+                    item: {
+                      ...this.state.item,
+                      title: e.target.value,
+                    },
                   })
-                  e.target.value = ""
-                  return
-                }
-                this.setState({
-                  error: null,
-                  item: {
-                    ...this.state.item,
-                    pics: fileList ? Array.from(fileList) : [],
-                  },
-                })
-              }}
-            />
-            <Form.Control.Feedback type="invalid">
-              {this.state.error}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={!!this.state.error || this.state.item.pics.length === 0}
-          >
-            {this.state.loading ? "Uploading..." : "Upload Item"}
-          </Button>
-        </Form>
-      </Container>
-    )
+                }}
+                placeholder="Enter item title"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={this.state.item.description}
+                onChange={(e) => {
+                  this.setState({
+                    item: {
+                      ...this.state.item,
+                      description: e.target.value,
+                    },
+                  })
+                }}
+                rows={3}
+                placeholder="Enter item description"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Upload Files (Max 5)</Form.Label>
+              <Form.Control
+                type="file"
+                multiple
+                isInvalid={!!this.state.error}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const fileList = e.target.files
+                  if (fileList && fileList.length > 5) {
+                    this.setState({
+                      error: `You can only upload a maximum of 5 images.`,
+                    })
+                    e.target.value = ""
+                    return
+                  }
+                  this.setState({
+                    error: null,
+                    item: {
+                      ...this.state.item,
+                      pics: fileList ? Array.from(fileList) : [],
+                    },
+                  })
+                }}
+              />
+              <Form.Control.Feedback type="invalid">
+                {this.state.error}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={!!this.state.error || this.state.item.pics == null}
+            >
+              {this.state.loading ? "Uploading..." : "Upload Item"}
+            </Button>
+          </Form>
+        </Container>
+      )
   }
 }
 

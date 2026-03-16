@@ -10,13 +10,13 @@ export interface UserPostRequest {
 }
 
 export interface UserState {
-  user: UserResponse
+  user: User
   isLoading: true
   error: null
 }
 
-export interface UserResponse {
-  id: UUID | string | null
+export interface User {
+  id: UUID | string
   name: string
   surname: string
   email: string
@@ -25,10 +25,19 @@ export interface UserResponse {
   items: Item[]
 }
 
+export interface UserResponse {
+  id: UUID | string
+  name: string
+  surname: string
+  email: string
+  city: string
+  profilePic: string | File | null
+}
+
 export interface Item {
   title: string
   description: string
-  pics: string[]
+  pics: string[] | null
   user: string
 }
 

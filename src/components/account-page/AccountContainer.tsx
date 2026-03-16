@@ -1,16 +1,21 @@
 import { Component } from "react"
-import { Container, Row, Col, Button } from "react-bootstrap"
-import { getUserInfo } from "../../api/userApi"
+import { Container, Row, Col, Alert } from "react-bootstrap"
+import { checkToken, getUserInfo } from "../../api/userApi"
 import type { UserResponse } from "../../types/user"
 import type { UserState } from "../../types/user"
+import type { Item } from "../../types/user"
 import ItemElement from "../body/feed-element/ItemElement"
+import { getItemsPerUser } from "../../api/itemApi"
+import AccountBox from "./AccountBox"
+import LoginForm from "./LoginForm"
 
 class AccountContainer extends Component {
+  activeUser = checkToken()
   authToken = localStorage.getItem("accessToken")
 
   state: UserState = {
     user: {
-      id: null,
+      id: "",
       name: "",
       surname: "",
       email: "",
@@ -24,11 +29,23 @@ class AccountContainer extends Component {
 
   async componentDidMount() {
     try {
-      const data: UserResponse = await getUserInfo(this.authToken)
-      this.setState({ user: data, isLoading: false })
+      const user: UserResponse = await getUserInfo(this.authToken)
+      const items: Item[] = await getItemsPerUser(this.authToken, user.id)
+      this.setState({
+        user: {
+          id: user.id,
+          name: user.name,
+          surname: user.surname,
+          email: user.email,
+          city: user.city,
+          profilePic: user.profilePic,
+          items: items,
+        },
+        isLoading: false,
+      })
     } catch (error) {
       this.setState({ error: true, isLoading: false })
-      console.log("Something went wrong" + error)
+      console.log(error)
     }
   }
 
@@ -37,47 +54,42 @@ class AccountContainer extends Component {
     //loading profile
     if (isLoading) return <div>Loading user profile...</div>
     //error
-    else if (error) return <div>Error: {error}</div>
+    else if (error)
+      return (
+        <>
+          <Alert className="w-100 text-center">
+            Logged out. Please log in again
+          </Alert>
+          <LoginForm />
+        </>
+      )
     else if (user)
       return (
         <>
           <Container fluid className="justify-content-center">
+            <AccountBox
+              id={this.state.user.id}
+              name={this.state.user.name}
+              surname={this.state.user.surname}
+              email={this.state.user.email}
+              city={this.state.user.city}
+              profilePic={this.state.user.profilePic}
+              items={this.state.user.items}
+            />
             <Row>
-              <Col xs="3" className="text-center">
-                {user.profilePic == null ? (
-                  <>
-                    <div className="dummy-profile-pic"></div>
-                    <a href="/account/edit"> update your profile picture</a>
-                  </>
-                ) : (
-                  <img src={user.profilePic} />
-                )}
-              </Col>
-              <Col xs="7">
-                <h3>
-                  {user.name} {user.surname}
-                </h3>
-                <h5>{user.city}</h5>
-                <Button className="btn btn-success p-1">
-                  Send me a message
-                </Button>
-              </Col>
-              <Col>
-                <Button className="btn btn-warning p-1" href="/editProfile">
-                  edit profile
-                </Button>
-                <Button className="btn btn-danger p-1 m-1">
-                  Delete profile
-                </Button>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h3>Your items</h3>
-                {user.items.map((item) => (
-                  <ItemElement title={item.title} description={item.description} pics={item.pics} user={item.user} />
-                ))}
-              </Col>
+              <h3>Your items</h3>
+              {user.items.map((item) => (
+                <Col>
+                  <ItemElement
+                    title={item.title}
+                    description={item.description}
+                    pics={item.pics}
+                    user_name={this.state.user.name}
+                    user_surname={this.state.user.surname}
+                    user_city={this.state.user.city}
+                  />
+                </Col>
+              ))}
             </Row>
           </Container>
         </>

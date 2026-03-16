@@ -1,6 +1,15 @@
 import { API_BASE_URL } from "../config/constants"
 import type { UserLogin, UserPostRequest, UserResponse } from "../types/user"
 
+export async function checkToken(): Promise<string | null> {
+  const activeUser = localStorage.getItem("activeUser")
+  if (!activeUser) {
+    localStorage.setItem("accessToken", "");
+    return activeUser
+  }
+  else return activeUser
+}
+
 export async function newUser(data: UserPostRequest): Promise<UserResponse> {
   try {
     const response = await fetch(API_BASE_URL + "/auth/register", {
@@ -24,6 +33,7 @@ export async function newUser(data: UserPostRequest): Promise<UserResponse> {
 
 interface LoginResponseDTO {
   accessToken: string
+  activeUser: string
 }
 
 export async function loggingUser(payload: UserLogin): Promise<string> {
@@ -42,6 +52,7 @@ export async function loggingUser(payload: UserLogin): Promise<string> {
     if (response.ok) {
       const data: LoginResponseDTO = JSON.parse(text)
       localStorage.setItem("accessToken", data.accessToken)
+      localStorage.setItem("activeUser", payload.email)
       return data.accessToken
     } else {
       try {
@@ -78,11 +89,43 @@ export async function getUserInfo(token: string | null): Promise<UserResponse> {
 
     if (response.ok) {
       const data: UserResponse = await response.json()
-      console.log("User Data:", data)
       return data
     } else throw new Error("Login failed")
   } catch (error) {
     console.error("Network or parsing error:", error)
     throw error
   }
+}
+
+
+export async function modifyUser(token: string | null, payload: UserResponse): Promise<UserResponse> {
+   if (!token) {
+     console.error("No token provided")
+  }
+  
+  const formData = new FormData()
+  formData.append("name", payload.name)
+  formData.append("surname", payload.surname)
+  formData.append("email", payload.email)
+  formData.append("city", payload.city)
+  if (payload.profilePic) {
+      formData.append("profilePic", payload.profilePic)
+    }
+
+   try {
+     const response = await fetch(`${API_BASE_URL}/users/me/edit`, {
+       method: "PUT",
+       headers: {
+         Authorization: `Bearer ${token}`,
+       },
+       body: formData,
+     })
+     if (response.ok) {
+       const data: UserResponse = await response.json()
+       return data
+     } else throw new Error("Edit failed")
+   } catch (error) {
+     console.error("Network or parsing error:", error)
+     throw error
+   }
 }

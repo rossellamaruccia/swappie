@@ -106,16 +106,15 @@ class SubscribeForm extends Component {
             />
           </Form.Group>
           <Form.Group className="mb-2">
-            <Form.Label>Insert your city</Form.Label>
+            <Form.Label>Allow your geolocation</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="City"
-              value={this.state.user.city}
-              onChange={(e) => {
+              type="check"
+              placeholder=" I allow to give you my position"
+              onChange={() => {
                 this.setState({
                   user: {
                     ...this.state.user,
-                    city: e.target.value,
+                    //todo: geolocation function
                   },
                 })
               }}

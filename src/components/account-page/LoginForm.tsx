@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Container, Form, Button } from "react-bootstrap"
 import { loggingUser } from "../../api/userApi"
+import { Navigate } from "react-router-dom"
 
 const LoginForm = () => {
   const [formValue, setFormValue] = useState({ email: "", password: "" })
@@ -10,6 +11,7 @@ const LoginForm = () => {
     try {
       loggingUser(formValue)
       console.log("done")
+      return <Navigate to="/account" replace />
     } catch(error) {
        return "Something went wrong: " + error
     }
