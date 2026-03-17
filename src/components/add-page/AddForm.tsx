@@ -1,23 +1,19 @@
 import { Component } from "react"
 import { Form, Button, Container } from "react-bootstrap"
-import type { Item } from "../../types/user"
-import type { UserResponse } from "../../types/user"
+import type { ItemFormState } from "../../types/types"
+import type { User } from "../../types/types"
 import { addNewItem } from "../../api/itemApi"
 import { getUserInfo } from "../../api/userApi"
 
-interface FormState {
-  item: Item
-  loading: false
-  error: string | null
-}
 class AddForm extends Component {
   authToken = localStorage.getItem("accessToken")
 
-  state: FormState = {
+  state: ItemFormState = {
     item: {
       title: "",
       description: "",
-      pics: [],
+      pics: undefined,
+      type: {BORROW: "BORROW", DONATE: "DONATE"},
       user: "",
     },
     loading: false,
@@ -26,7 +22,7 @@ class AddForm extends Component {
 
   async componentDidMount() {
     try {
-      const userData: UserResponse = await getUserInfo(this.authToken)
+      const userData: User = await getUserInfo(this.authToken)
       this.setState({
         item: {
           ...this.state.item,
@@ -130,7 +126,7 @@ class AddForm extends Component {
           <Button
             variant="primary"
             type="submit"
-            disabled={!!this.state.error || this.state.item.pics.length === 0}
+            disabled={!!this.state.error || this.state.item.pics!.length === 0}
           >
             {this.state.loading ? "Uploading..." : "Upload Item"}
           </Button>

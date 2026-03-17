@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../config/constants"
-import type { Item } from "../types/user"
+import type { Item } from "../types/types"
 
 export async function addNewItem(token: string | null, body: Item) {
   if (!token) {
@@ -9,7 +9,7 @@ export async function addNewItem(token: string | null, body: Item) {
   const formData = new FormData()
   formData.append("title", body.title)
   formData.append("description", body.description)
-  body.pics.forEach((file) => {
+  body.pics!.forEach((file) => {
     formData.append("files", file)
   })
 
