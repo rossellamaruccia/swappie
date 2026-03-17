@@ -30,7 +30,7 @@ class FeedContainer extends Component {
 
   componentDidMount() {
       this.fetchItems();
-      updateUserLocation(this.authToken!)
+      //updateUserLocation(this.authToken!)
   }
 
   render() {

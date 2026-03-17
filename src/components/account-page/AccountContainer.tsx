@@ -6,6 +6,7 @@ import { Component } from "react"
 // import ItemElement from "../body/feed-element/ItemElement"
 
 class AccountContainer extends Component {
+  
   authToken = localStorage.getItem("accessToken")
 
 //   state: UserFormState = {

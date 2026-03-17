@@ -7,14 +7,6 @@ import type {
   Geolocation,
 } from "../types/types"
 
-const activeUser = localStorage.getItem("activeUser")
-
-export async function checkToken(): Promise<string | null> {
-  if (!activeUser) {
-    localStorage.setItem("accessToken", "")
-    return activeUser
-  } else return activeUser
-}
 
 export async function getLocation(): Promise<Geolocation> {
   try {

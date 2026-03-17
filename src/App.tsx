@@ -10,11 +10,22 @@ import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
 import AccountContainer from "./components/account-page/AccountContainer"
 import AddForm from "./components/add-page/AddForm"
+import { useEffect } from "react"
+import { isTokenValid, logout } from "./utils/auth"
+
 
 
 function App() {
-
-const authToken = localStorage.getItem("accessToken")
+  
+  useEffect(() => {
+  const authToken = localStorage.getItem("accessToken")
+  if (isTokenValid(authToken)) {
+    console.warn("Session expired. Logging out.")
+    logout()
+  }
+  }, [])
+  
+  const authToken = localStorage.getItem("accessToken")
   
   return (
     <>
@@ -22,7 +33,7 @@ const authToken = localStorage.getItem("accessToken")
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            {authToken == null ? (
+            {authToken == "" ? (
               <Route path="/" element={<HeroBanner />} />
             ) : (
               <Route path="/" element={<FeedContainer />} />
