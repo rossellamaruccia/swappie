@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Container, Form, Button } from "react-bootstrap"
 import { loggingUser } from "../../api/userApi"
 
+
 const LoginForm = () => {
   const [formValue, setFormValue] = useState({ email: "", password: "" })
 
@@ -9,7 +10,6 @@ const LoginForm = () => {
     event.preventDefault()
     try {
       loggingUser(formValue)
-      console.log("done")
     } catch(error) {
        return "Something went wrong: " + error
     }

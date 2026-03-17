@@ -10,21 +10,14 @@ import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
 import AccountContainer from "./components/account-page/AccountContainer"
 import AddForm from "./components/add-page/AddForm"
-import { useEffect } from "react"
-import { isTokenValid, logout } from "./utils/auth"
+
+import { isTokenValid } from "./utils/auth"
+import EditForm from "./components/account-page/EditForm"
 
 
 
-function App() {
-  
-  useEffect(() => {
-  const authToken = localStorage.getItem("accessToken")
-  if (isTokenValid(authToken)) {
-    console.warn("Session expired. Logging out.")
-    logout()
-  }
-  }, [])
-  
+function App() { 
+   
   const authToken = localStorage.getItem("accessToken")
   
   return (
@@ -33,7 +26,7 @@ function App() {
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            {authToken == "" ? (
+            {!authToken || !isTokenValid(authToken) ? (
               <Route path="/" element={<HeroBanner />} />
             ) : (
               <Route path="/" element={<FeedContainer />} />
@@ -41,6 +34,7 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SubscribeForm />} />
             <Route path="/account" element={<AccountContainer />} />
+            <Route path="/account/edit" element={<EditForm />} />
             <Route path="/add" element={<AddForm />} />
             <Route path="/settings" />
           </Routes>

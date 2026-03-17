@@ -1,103 +1,132 @@
-import { Component } from "react"
-// import { Container, Row, Col, Alert } from "react-bootstrap"
-// import { checkToken, getUserInfo } from "../../api/userApi"
-// import type { User, UserFormState } from "../../types/types"
-// import type { Item } from "../../types/types"
-// import ItemElement from "../body/feed-element/ItemElement"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { Container, Row, Col, Button, Alert } from "react-bootstrap"
+import { getUserInfo } from "../../api/userApi"
+import { isTokenValid } from "../../utils/auth"
+import { getItemsPerUser } from "../../api/itemApi"
+import type { User } from "../../types/types"
+import type { Item } from "../../types/types"
+import ItemElement from "../body/feed-element/ItemElement"
+import LoginForm from "../signup-page/LoginForm"
 
-class AccountContainer extends Component {
+const AccountContainer = () => {
+  const [user, setUser] = useState<User | null>(null)
+  const [items, setItems] = useState<Item[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  const navigate = useNavigate()
   
-  authToken = localStorage.getItem("accessToken")
+  useEffect(() => {
+    const fetchData = async () => {
+      const authToken = localStorage.getItem("accessToken")
+      if (!authToken || !isTokenValid(authToken)) {
+        setError(true)
+        setIsLoading(false)
+        return
+      }
 
-//   state: UserFormState = {
-//     user: {
-//       id: null,
-//       name: "",
-//       surname: "",
-//       email: "",
-//       city: "",
-//       profilePic: "",
-//       items: [],
-//       location: [0.0, 0.0],
-//     },
-//     isLoading: true,
-//     error: null,
-//   }
+      try {
+        const [userData, itemData] = await Promise.all([
+          getUserInfo(authToken),
+          getItemsPerUser(authToken),
+        ])
 
-//   async componentDidMount() {
-//     try {
-//       const user: User = await getUserInfo(this.authToken)
-//       //const items: Item[] = await getItemsPerUser(this.authToken, user.id!)
-//       this.setState({
-//         user: {
-//           id: user.id,
-//           name: user.name,
-//           surname: user.surname,
-//           email: user.email,
-//           city: user.city,
-//           profilePic: user.profilePic,
-//           items: items,
-//           location: user.location,
-//         },
-//         isLoading: false,
-//       })
-//     } catch (error) {
-//       this.setState({ error: true, isLoading: false })
-//       console.log("Something went wrong" + error)
-//     }
-//   }
+        setUser(userData)
+        setItems(itemData)
+      } catch (err) {
+        console.error("Fetch failed:", err)
+        setError(true)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-//   render() {
-//     const { user, isLoading, error } = this.state
-//     //loading profile
-//     if (isLoading) return <div>Loading user profile...</div>
-//     //error
-//     else if (error) return <div>Error: {error}</div>
-//     else if (user)
-//       return (
-//         <>
-//           <Container fluid className="justify-content-center">
-//             <Row>
-//               <Col xs="3" className="text-center">
-//                 {user.profilePic == null ? (
-//                   <>
-//                     <div className="dummy-profile-pic"></div>
-//                     <a href="/account/edit"> update your profile picture</a>
-//                   </>
-//                 ) : (
-//                   <img src={user.profilePic} />
-//                 )}
-//               </Col>
-//               <Col xs="7">
-//                 <h3>
-//                   {user.name} {user.surname}
-//                 </h3>
-//                 <h5>{user.city}</h5>
-//                 <Button className="btn btn-success p-1">
-//                   Send me a message
-//                 </Button>
-//               </Col>
-//               <Col>
-//                 <Button className="btn btn-warning p-1" href="/editProfile">
-//                   edit profile
-//                 </Button>
-//                 <Button className="btn btn-danger p-1 m-1">
-//                   Delete profile
-//                 </Button>
-//               </Col>
-//             </Row>
-//             <Row>
-//               <Col>
-//                 <h3>Your items</h3>
-//                 {user.items.map((item) => (
-//                   <ItemElement title={item.title} description={item.description} pics={item.pics} user={item.user} />
-//                 ))}
-//               </Col>
-//             </Row>
-//           </Container>
-//         </>
-//       )
-//   }
- }
+    fetchData()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <Alert className="my-3 p-3 text-center">Loading user profile...</Alert>
+    )
+  }
+
+  if (error || !user) {
+    return (
+      <Container className="text-center mt-5">
+        <Alert variant="danger">
+          Session expired or user not found. Please log in again.
+        </Alert>
+        <LoginForm />
+      </Container>
+    )
+  }
+
+  return (
+    <Container fluid className="py-4">
+      <Row className="align-items-center">
+        <Col xs={12} md={3} className="text-center mb-3">
+          {user.profilePic ? (
+            <img
+              src={user.profilePic}
+              alt="Profile"
+              className="img-fluid rounded-circle shadow-sm"
+              style={{ width: "150px" }}
+            />
+          ) : (
+            <>
+              <div
+                className="dummy-profile-pic mx-auto mb-2"
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  backgroundColor: "#e9ecef",
+                  borderRadius: "50%",
+                }}
+              ></div>
+              <Button
+                variant="link"
+                size="sm"
+                onClick={() => navigate("/account/edit")}
+              >
+                Update picture
+              </Button>
+            </>
+          )}
+        </Col>
+
+        <Col xs={12} md={6}>
+          <h3>
+            {user.name} {user.surname}
+          </h3>
+          <h5 className="text-muted">{user.city}</h5>
+          <Button variant="success" className="mt-2">
+            Send me a message
+          </Button>
+        </Col>
+
+        <Col xs={12} md={3} className="d-flex flex-column gap-2">
+          <Button variant="warning" onClick={() => navigate("/account/edit")}>
+            Edit Profile
+          </Button>
+          <Button variant="danger">Delete Profile</Button>
+        </Col>
+      </Row>
+
+      <hr className="my-5" />
+
+      <Row>
+        <Col>
+          <h3 className="mb-4">Your Items ({items.length})</h3>
+          {items.length > 0 ? (
+            items.map((item, i) => <ItemElement key={i+1} {...item} />)
+          ) : (
+            <p className="text-muted">You haven't posted any items yet.</p>
+          )}
+        </Col>
+      </Row>
+    </Container>
+  )
+}
 
 export default AccountContainer

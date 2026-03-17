@@ -3,7 +3,6 @@ import type {
   UserLogin,
   User,
   UserSignUpRequest,
-  UpdatedUserProfile,
   Geolocation,
 } from "../types/types"
 
@@ -75,7 +74,7 @@ interface LoginResponseDTO {
   accessToken: string
 }
 
-export async function loggingUser(payload: UserLogin): Promise<string> {
+export async function loggingUser(payload: UserLogin) {
   try {
     const response = await fetch(API_BASE_URL + "/auth/login", {
       method: "POST",
@@ -91,7 +90,7 @@ export async function loggingUser(payload: UserLogin): Promise<string> {
     if (response.ok) {
       const data: LoginResponseDTO = JSON.parse(text)
       localStorage.setItem("accessToken", data.accessToken)
-      return data.accessToken
+      window.location.href = "/account"      
     } else {
       try {
         const errorData = JSON.parse(text)
@@ -137,7 +136,7 @@ export async function getUserInfo(token: string | null): Promise<User> {
 
 export async function modifyUser(
   token: string | null,
-  payload: UpdatedUserProfile,
+  payload: User,
 ): Promise<User> {
   if (!token) {
     console.error("No token provided")

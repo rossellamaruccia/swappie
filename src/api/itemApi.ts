@@ -22,8 +22,26 @@ export async function addNewItem(token: string | null, body: Item) {
   })
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}))
+    const errorData = await response.json().catch(() => ({
+      //login failed - redirect on loginpage
+    }))
     throw new Error(errorData.message || "Operation failed")
   }
   return await response.json()
+}
+
+export async function getItemsPerUser(token: string | null): Promise<Item[]> {
+  const response = await fetch(`${API_BASE_URL}/items`, {
+    headers: {
+      Authorization : `Bearer ${token}`,
+    }
+  })
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({
+      //login failed - redirect on loginpage
+    }))
+    throw new Error(errorData.message || "Operation failed")
+  }
+  const itemsData: Item[] = await response.json()
+  return itemsData;
 }
