@@ -6,6 +6,7 @@ function SettingsButton() {
       <>
         <Button className="btn settingsButton" href="/settings">
           <VscSettingsGear />
+          <span className="label">Settings</span>
         </Button>
       </>
     )

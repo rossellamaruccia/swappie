@@ -104,12 +104,39 @@ margin: 0 auto;
   border: none;
   font-weight: 500;
   font-size: large;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(105%, 105%);
+}
+
+.label {
+  position: absolute;
+  bottom: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.settingsButton:hover .label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-5px);
 }
 
 .subscribeButton{
   font-size: 0.8rem;
   padding: 0.5rem;
 }
+
 
 .subscribeButton:hover{
   color:green;
@@ -145,6 +172,14 @@ h4{
   background-color: grey;
   background-image: url(/src/assets/pexels-wordsurfer-909256.jpg);
   background-size:contain;
-  border: darkgray;
-  box-shadow: #333 1px ;
+  border: darkgray 2px;
+}
+
+.profile-picture{
+  width: 150px;
+  height: 150px;
+  border-radius: 50px;
+  margin: 0 auto;
+  padding: 0;
+  border: darkgray 2px;
 }

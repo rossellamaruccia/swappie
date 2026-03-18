@@ -1,7 +1,7 @@
 import { useState, useEffect, type ChangeEvent, type SubmitEvent } from "react"
 import { Container, Form, Button, Alert } from "react-bootstrap"
 import type { User } from "../../types/types"
-import { modifyUser, getUserInfo, updateProfilePic } from "../../api/userApi"
+import { modifyUser, getUserInfo, updateProfilePic, updateUserLocation } from "../../api/userApi"
 import { useNavigate } from "react-router-dom"
 import { isTokenValid } from "../../utils/auth"
 import LocationPicker from "./LocationPicker"
@@ -68,6 +68,7 @@ const EditForm = () => {
         ...prev,
         location: coords ? coords : { lat: 0, lng: 0 },
       }))
+      updateUserLocation(authToken, user.location!)
     }
 
   const handleSubmit = async (event: SubmitEvent) => {
@@ -143,11 +144,11 @@ const EditForm = () => {
         <Form.Group className="my-3 p-3 border rounded bg-light">
           <h6>Update my location</h6>
           <LocationPicker onLocationFound={handleLocationChange} />
-          {user.location.lat !== 0 && (
+          { user.location? (
             <div className="mt-3">
               <LocationMap lat={user.location.lat} lng={user.location.lng} />
             </div>
-          )}
+          ) : (<></>)}
         </Form.Group>
 
         <Button variant="success" type="submit" disabled={submitting}>

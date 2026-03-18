@@ -3,6 +3,7 @@ import type {
   UserLogin,
   User,
   UserSignUpRequest,
+  Geolocation,
 } from "../types/types"
 
 
@@ -133,13 +134,6 @@ export async function modifyUser(
   city: payload.city,
 };
 
-if (payload.location?.lng && payload.location?.lat) {
-  data.location = {
-    lng: payload.location.lng,
-    lat: payload.location.lat
-  };
-  }
-
   try {
     const response = await fetch(`${API_BASE_URL}/users/me/edit`, {
       method: "PUT",
@@ -148,6 +142,37 @@ if (payload.location?.lng && payload.location?.lat) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    })
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    return response.ok
+  } catch (error) {
+    console.error("Error in POST request:", error)
+    throw error
+  }
+}
+
+export async function updateUserLocation(token: string | null, location: Geolocation) {
+  if (!token) {
+    console.error("No token provided")
+    throw new Error("Please Log in again")
+  }
+
+  const geolocation = {
+    lng: location.lng,
+    lat: location.lat
+  }
+
+  try{
+  const response = await fetch(`${API_BASE_URL}/users/me/edit/location`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(geolocation),
     })
     
     if (!response.ok) {
