@@ -10,15 +10,26 @@ import LoginForm from "./components/signup-page/LoginForm"
 import SubscribeForm from "./components/signup-page/SubscribeForm"
 import AccountContainer from "./components/account-page/AccountContainer"
 import AddForm from "./components/add-page/AddForm"
-
-import { isTokenValid } from "./utils/auth"
+import { useState, useEffect } from "react"
+import { isTokenValid, logout } from "./utils/auth"
 import EditForm from "./components/account-page/EditForm"
 
 
 
 function App() { 
-   
-  const authToken = localStorage.getItem("accessToken")
+    const [error, setError] = useState(false)
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const authToken = localStorage.getItem("accessToken")
+      if (!authToken || !isTokenValid(authToken)) {
+        setError(true)
+        logout()
+        return
+      }
+    }
+    checkToken()
+  }, [])
   
   return (
     <>
@@ -26,7 +37,7 @@ function App() {
         <HeaderBar />
         <BrowserRouter>
           <Routes>
-            {!authToken || !isTokenValid(authToken) ? (
+            {error ? (
               <Route path="/" element={<HeroBanner />} />
             ) : (
               <Route path="/" element={<FeedContainer />} />

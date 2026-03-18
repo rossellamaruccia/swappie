@@ -1,6 +1,5 @@
 import { Col, Row, Carousel, Image } from "react-bootstrap"
-import type { Item } from "../../../types/user"
-import UserThumbnail from "./UserThumbnail"
+import type { Item } from "../../../types/types"
 
 function ItemElement(props: Item) {
   return (
@@ -8,7 +7,7 @@ function ItemElement(props: Item) {
       <Row className="mt-2">
         <Col sm="3">
           <Carousel>
-            {props.pics.map((pic) => (
+            {props.pics!.map((pic) => (
               <Carousel.Item>
                 <Image src={pic} />
               </Carousel.Item>
@@ -20,7 +19,7 @@ function ItemElement(props: Item) {
           <p>{props.description}</p>
         </Col>
         <Col sm="2">
-          <UserThumbnail user={props.user} />
+          
         </Col>
       </Row>
     </>

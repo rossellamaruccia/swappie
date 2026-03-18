@@ -1,6 +1,5 @@
 import { Container, Row} from "react-bootstrap"
 import { Component } from "react"
-import { updateUserLocation } from "../../api/userApi"
 
 class FeedContainer extends Component {
 

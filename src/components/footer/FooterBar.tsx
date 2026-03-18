@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap"
 import { FaGooglePlay } from "react-icons/fa"
 import { FaApple } from "react-icons/fa"
 import CustomLink from "./CustomLink"
-import LogoButton from "../LogoButton"
+import LogoButton from "../header/LogoButton"
 
 function FooterBar() {
   return (
