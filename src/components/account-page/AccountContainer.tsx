@@ -2,21 +2,21 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container, Row, Col, Button, Alert } from "react-bootstrap"
 import { getUserInfo } from "../../api/userApi"
-import { isTokenValid } from "../../utils/auth"
+import { isTokenValid, logout } from "../../utils/auth"
 import { getItemsPerUser } from "../../api/itemApi"
-import type { User } from "../../types/types"
-import type { Item } from "../../types/types"
+import type { ItemGetResponse, User } from "../../types/types"
 import ItemElement from "../body/feed-element/ItemElement"
 import LoginForm from "../signup-page/LoginForm"
 import { FaEdit } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import { FaRegMessage } from "react-icons/fa6"
+import { FiLogOut } from "react-icons/fi"
 import AddButton from "../header/AddButton"
 import LocationMap from "./LocationMap"
 
 const AccountContainer = () => {
   const [user, setUser] = useState<User | null>(null)
-  const [items, setItems] = useState<Item[]>([])
+  const [items, setItems] = useState<ItemGetResponse[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(false)
 
@@ -61,8 +61,8 @@ const AccountContainer = () => {
   if (error || !user) {
     return (
       <Container className="text-center mt-5">
-        <Alert variant="danger" className="my-3 p-3 text-center w-50 mx-auto">
-          Session expired or user not found. Please log in again.
+        <Alert variant="info" className="my-3 p-3 text-center w-50 mx-auto">
+          Session expired. Please log in again.
         </Alert>
         <LoginForm />
       </Container>
@@ -106,6 +106,16 @@ const AccountContainer = () => {
           </Button>
           <Button
             className="btn settingsButton mt-0"
+            onClick={() => {
+              logout()
+              navigate("/")
+            }}
+          >
+            <FiLogOut />
+            <span className="label">Log out</span>
+          </Button>
+          <Button
+            className="btn settingsButton mt-0"
             onClick={() => navigate("/account/edit")}
           >
             <FaEdit />
@@ -121,14 +131,17 @@ const AccountContainer = () => {
       <hr className="my-5" />
 
       <Row>
-        <Col>
-          <h3 className="mb-4">Your Items ({items.length})</h3>
-          {items.length > 0 ? (
-            items.map((item, i) => <ItemElement key={i + 1} {...item} />)
-          ) : (
-            <p className="text-muted">You haven't posted any items yet.</p>
-          )}
-        </Col>
+        <h3 className="mb-4">Your Items ({items.length})</h3>
+
+        {items.length > 0 ? (
+          items.map((item, i) => (
+            <Col xs="12" md="3" className="m-0">
+              <ItemElement item={item} key={i + 1} />
+            </Col>
+          ))
+        ) : (
+          <p className="text-muted">You haven't posted any items yet.</p>
+        )}
       </Row>
     </Container>
   )

@@ -23,9 +23,8 @@ function App() {
     const checkToken = async () => {
       const authToken = localStorage.getItem("accessToken")
       if (!authToken || !isTokenValid(authToken)) {
-        setError(true)
         logout()
-        return
+        setError(true)
       }
     }
     checkToken()

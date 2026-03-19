@@ -15,9 +15,12 @@ const EditForm = () => {
     name: "",
     surname: "",
     email: "",
-    profilePic: "",
+    profilePic: undefined,
     city: "",
-    location: { lat: 0.0, lng: 0.0 },
+    location: {
+      lng: 0.0,
+      lat: 0.0
+    },
   })
 
   const [isLoading, setIsLoading] = useState(true)

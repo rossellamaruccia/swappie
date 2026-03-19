@@ -1,22 +1,5 @@
 import type { UUID } from "crypto"
 
-export interface UserFormState {
-  user: User
-  isLoading: true
-  error: null
-}
-
-export interface ItemFormState {
-  item: Item
-  loading: false
-  error: string | null
-}
-
-export interface ItemType {
-  BORROW: "BORROW"
-  DONATE: "DONATE"
-}
-
 export interface Geolocation {
   lng: number
   lat: number
@@ -28,49 +11,40 @@ export interface GeoSearchRequest {
   radiusInMeters: number
 }
 
-export interface User {
-  id?: UUID | string
+export interface UserLogin {
+  email: string
+  password: string
+}
+
+export interface User extends UserLogin {
   name?: string
   surname?: string
-  email?: string
   city?: string
   profilePic?: string | null
   items?: Item[]
   location?: Geolocation
 }
 
-export interface UserSignUpRequest {
-  name: string
-  surname: string
-  email: string
-  password: string
-  city: string
-  profilePic?: string
-  location?: Geolocation
+export interface UserGetResponse extends User {
+  id: UUID | string
 }
+
+export interface UserSignUpRequest extends User {
+  password: string
+}
+
 
 export interface Item {
   title: string
   description: string
-  pics?: string[]
-  user: UUID | string
-  type: ItemType
-  location?: Geolocation
-  distanceMeters?: number
+  pics?: File[]
+  user?: UUID | string
+  type: string
 }
 
-export interface UpdatedUserProfile {
-  name?: string
-  surname?: string
-  email?: string
-  password?: string
-  city?: string
-  image?: string
-  profilePic?: string
-  location?: Geolocation
-}
-
-export interface UserLogin {
-  email: string
-  password: string
+export interface ItemGetResponse extends Item {
+  id: number
+  pics_urls?: string[]
+  lng: number
+  lat: number
 }
