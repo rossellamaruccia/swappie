@@ -1,19 +1,14 @@
 import "../../customs.css"
-import LogoButton from "../LogoButton"
-import SearchField from "../SearchField"
+import LogoButton from "./LogoButton"
+import SearchField from "./SearchField"
 import SettingsButton from "./SettingsButton"
 import { Container, Row, Col, Navbar } from "react-bootstrap"
-import SubscribeButton from "./SubscribeButton"
 import AddButton from "./AddButton"
 import HelpButton from "./HelpButton"
 import CategoryButton from "../footer/CategoryButton"
 import AccountButton from "./AccountButton"
 
 function HeaderBar() {
-const authToken = () => {
-  return localStorage.getItem("accessToken")
-}
-
   return (
     <Navbar expand="md">
       <Container fluid className="nav navbar">
@@ -25,7 +20,7 @@ const authToken = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Col className="buttonsCol">
-                {authToken == null ? <SubscribeButton /> : <AccountButton />}
+                <AccountButton />
                 <AddButton />
                 <SettingsButton />
                 <HelpButton />

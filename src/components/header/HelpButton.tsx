@@ -6,6 +6,7 @@ function HelpButton() {
       <>
         <Button className="settingsButton" href="/help">
           <RxQuestionMarkCircled />
+          <span className="label">Help</span>
         </Button>
       </>
     )

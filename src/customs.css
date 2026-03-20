@@ -5,12 +5,12 @@ div{
 }
 
 a{
-  color: darkgray;
+  color: #FE9C54;
   text-decoration: none;
 }
 
 a:hover{
-  color: black;
+  color: #b44b00;
 }
 
 .container{
@@ -100,10 +100,36 @@ margin: 0 auto;
 
 .settingsButton:hover{
   background: white;
-  color: black;
+  color: green;
   border: none;
   font-weight: 500;
   font-size: large;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(105%, 105%);
+}
+
+.label {
+  position: absolute;
+  bottom: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.settingsButton:hover .label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-5px);
 }
 
 .subscribeButton{
@@ -111,14 +137,15 @@ margin: 0 auto;
   padding: 0.5rem;
 }
 
+
 .subscribeButton:hover{
   color:green;
 }
 
 .hero{
   box-sizing: border-box;
-  background-image: url('./assets/pexels-james-frid-81279-12657532.jpg');
-  background-position: top;
+  background-image: url('./assets/sfondo.png');
+  background-position: center;
 }
 
 .customForm{
@@ -127,7 +154,7 @@ margin: 0 auto;
   border-radius: 10px;
   padding: 1rem;
   width: 40%;
-  margin: 1rem auto;
+  margin: 1rem 3rem;
   font-size: small;
   color: darkgreen;
 }
@@ -145,6 +172,20 @@ h4{
   background-color: grey;
   background-image: url(/src/assets/pexels-wordsurfer-909256.jpg);
   background-size:contain;
-  border: darkgray;
-  box-shadow: #333 1px ;
+  border: darkgray 2px;
+}
+
+.profile-picture{
+  width: 150px;
+  height: 150px;
+  border-radius: 50px;
+  margin: 0 auto;
+  padding: 0;
+  border: darkgray 2px;
+}
+
+
+.card-body a{
+  font-size: 0.6rem;
+  border: 1px solid gray;
 }
