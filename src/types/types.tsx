@@ -33,13 +33,31 @@ export interface UserSignUpRequest extends User {
   password: string
 }
 
+export enum Category {
+  WORK_TOOLS = "WORK_TOOLS",
+  HOUSE_MAINTENANCE = "HOUSE_MAINTENANCE",
+  DIY = "DIY",
+  GARDENING = "GARDENING",
+  MUSIC_STUFF = "MUSIC_STUFF",
+  PARTY_MATERIAL = "PARTY_MATERIAL",
+  COOKING_TOOLS = "COOKING_TOOLS",
+  CRAFTING = "CRAFTING",
+  WOODWORKING = "WOODWORKING",
+  PAINTING = "PAINTING",
+}
+
+export enum ItemType {
+  BORROW = "BORROW",
+  DONATE = "DONATE"
+} 
 
 export interface Item {
   title: string
   description: string
   pics?: File[]
   user?: UUID | string
-  type: string
+  type: ItemType
+  category: Category
 }
 
 export interface ItemGetResponse extends Item {

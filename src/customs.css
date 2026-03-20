@@ -5,12 +5,12 @@ div{
 }
 
 a{
-  color: darkgray;
+  color: #FE9C54;
   text-decoration: none;
 }
 
 a:hover{
-  color: black;
+  color: #b44b00;
 }
 
 .container{
@@ -100,7 +100,7 @@ margin: 0 auto;
 
 .settingsButton:hover{
   background: white;
-  color: black;
+  color: green;
   border: none;
   font-weight: 500;
   font-size: large;
@@ -144,8 +144,8 @@ margin: 0 auto;
 
 .hero{
   box-sizing: border-box;
-  background-image: url('./assets/pexels-james-frid-81279-12657532.jpg');
-  background-position: top;
+  background-image: url('./assets/sfondo.png');
+  background-position: center;
 }
 
 .customForm{
@@ -154,7 +154,7 @@ margin: 0 auto;
   border-radius: 10px;
   padding: 1rem;
   width: 40%;
-  margin: 1rem auto;
+  margin: 1rem 3rem;
   font-size: small;
   color: darkgreen;
 }
@@ -182,4 +182,10 @@ h4{
   margin: 0 auto;
   padding: 0;
   border: darkgray 2px;
+}
+
+
+.card-body a{
+  font-size: 0.6rem;
+  border: 1px solid gray;
 }

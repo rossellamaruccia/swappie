@@ -135,7 +135,7 @@ const AccountContainer = () => {
 
         {items.length > 0 ? (
           items.map((item, i) => (
-            <Col xs="12" md="3" className="m-0">
+            <Col xs="12" md="4" className="m-0">
               <ItemElement item={item} key={i + 1} />
             </Col>
           ))

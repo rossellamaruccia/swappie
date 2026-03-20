@@ -1,17 +1,24 @@
-import { Form, Button, Container } from "react-bootstrap"
+import { Form, Button, Container, Alert } from "react-bootstrap"
 import { addNewItem } from "../../api/itemApi"
 import { useState, type ChangeEvent, type SubmitEvent } from "react"
 import { useNavigate } from "react-router-dom"
+import { Category, ItemType } from "../../types/types"
 
 const AddForm = () => {
   const authToken = localStorage.getItem("accessToken")
   const navigate = useNavigate()
+  const formatCategory = (str: string) =>
+    str
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, (c) => c.toUpperCase())
 
 const [item, setItem] = useState({
   title: "",
   description: "",
   pics: [] as File[],
-  type: "BORROW",
+  type: ItemType.BORROW,
+  category: Category.WORK_TOOLS,
 })
 
   const [loading, setLoading] = useState(false)
@@ -78,9 +85,10 @@ const [item, setItem] = useState({
             name="description"
             value={item.description}
             onChange={handleChange}
-            rows={3}
-            placeholder="Enter item description"
+            rows={2}
+            placeholder="Enter item description. 255 characters max."
           />
+          {item.description.length > 255? (<Alert variant="success">max characters for the description is 255. Less words more sharing!</Alert>) : (<></>)}
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -92,8 +100,8 @@ const [item, setItem] = useState({
               name="type"
               type="radio"
               id="type-borrow"
-              value="BORROW"
-              checked={item.type === "BORROW"}
+              value={ItemType.BORROW}
+              checked={item.type === ItemType.BORROW}
               onChange={handleChange}
             />
             <Form.Check
@@ -102,11 +110,26 @@ const [item, setItem] = useState({
               name="type"
               type="radio"
               id="type-donate"
-              value="DONATE"
-              checked={item.type === "DONATE"}
+              value={ItemType.DONATE}
+              checked={item.type === ItemType.DONATE}
               onChange={handleChange}
             />
           </div>
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Category</Form.Label>
+          <Form.Select
+            name="category"
+            value={item.category}
+            onChange={handleChange}
+          >
+            {Object.values(Category).map((value) => (
+              <option key={value} value={value}>
+                {formatCategory(value)}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3">

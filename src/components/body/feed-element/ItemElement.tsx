@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, Badge, Button, Stack } from "react-bootstrap"
+import { Card, Button, Stack } from "react-bootstrap"
 import type { ItemGetResponse } from "../../../types/types"
 
 interface ItemCardProps {
@@ -14,18 +14,18 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
   const badgeBg = isBorrow ? "info" : "success"
 
   return (
-    <Card className="h-100 shadow-sm">
+    <Card className="h-100 shadow-sm" border={badgeBg}>
       <Card.Img
         variant="top"
         src={
           item.pics_urls && item.pics_urls.length > 0
             ? item.pics_urls[0]
-            : "https://placecats.com/300/200"
+            : "src/assets/pexels-wordsurfer-909256.jpg"
         }
-        style={{ height: "200px", objectFit: "cover" }}
+        style={{ height: "150px", objectFit: "cover" }}
       />
 
-      <Card.Body className="d-flex flex-column">
+      <Card.Body className="d-flex flex-column" >
         <Stack
           direction="horizontal"
           className="justify-content-between align-items-start mb-2"
@@ -36,10 +36,13 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
           >
             {item.title}
           </Card.Title>
-          <Badge bg={badgeBg}>{item.type}</Badge>
         </Stack>
 
         <Card.Text className="text-muted small flex-grow-1">
+          <a>{item.type}</a>
+          <br/>
+          <a>{item.category}</a>
+          <br/>
           {item.description.length > 100
             ? `${item.description.substring(0, 95)}...`
             : item.description}
