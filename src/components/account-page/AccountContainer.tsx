@@ -1,100 +1,150 @@
-import { Component } from "react"
-import { Container, Row, Col, Alert } from "react-bootstrap"
-import { checkToken, getUserInfo } from "../../api/userApi"
-import type { UserResponse } from "../../types/user"
-import type { UserState } from "../../types/user"
-import type { Item } from "../../types/user"
-import ItemElement from "../body/feed-element/ItemElement"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { Container, Row, Col, Button, Alert } from "react-bootstrap"
+import { getUserInfo } from "../../api/userApi"
+import { isTokenValid, logout } from "../../utils/auth"
 import { getItemsPerUser } from "../../api/itemApi"
-import AccountBox from "./AccountBox"
+import type { ItemGetResponse, User } from "../../types/types"
+import ItemElement from "../body/feed-element/ItemElement"
 import LoginForm from "./LoginForm"
+import { FaEdit } from "react-icons/fa"
+import { MdDelete } from "react-icons/md"
+import { FaRegMessage } from "react-icons/fa6"
+import { FiLogOut } from "react-icons/fi"
+import AddButton from "../header/AddButton"
+import LocationMap from "./LocationMap"
 
-class AccountContainer extends Component {
-  activeUser = checkToken()
-  authToken = localStorage.getItem("accessToken")
+const AccountContainer = () => {
+  const [user, setUser] = useState<User | null>(null)
+  const [items, setItems] = useState<ItemGetResponse[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-  state: UserState = {
-    user: {
-      id: "",
-      name: "",
-      surname: "",
-      email: "",
-      city: "",
-      profilePic: "",
-      items: [],
-    },
-    isLoading: true,
-    error: null,
-  }
+  const navigate = useNavigate()
 
-  async componentDidMount() {
-    try {
-      const user: UserResponse = await getUserInfo(this.authToken)
-      const items: Item[] = await getItemsPerUser(this.authToken, user.id)
-      this.setState({
-        user: {
-          id: user.id,
-          name: user.name,
-          surname: user.surname,
-          email: user.email,
-          city: user.city,
-          profilePic: user.profilePic,
-          items: items,
-        },
-        isLoading: false,
-      })
-    } catch (error) {
-      this.setState({ error: true, isLoading: false })
-      console.log(error)
+  useEffect(() => {
+    const fetchData = async () => {
+      const authToken = localStorage.getItem("accessToken")
+      if (!authToken || !isTokenValid(authToken)) {
+        setError(true)
+        setIsLoading(false)
+        return
+      }
+
+      try {
+        const [userData, itemData] = await Promise.all([
+          getUserInfo(authToken),
+          getItemsPerUser(authToken),
+        ])
+
+        setUser(userData)
+        setItems(itemData)
+      } catch (err) {
+        console.error("Fetch failed:", err)
+        setError(true)
+      } finally {
+        setIsLoading(false)
+      }
     }
+
+    fetchData()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <Alert className="my-3 p-3 text-center w-50 mx-auto">
+        Loading user profile...
+      </Alert>
+    )
   }
 
-  render() {
-    const { user, isLoading, error } = this.state
-    //loading profile
-    if (isLoading) return <div>Loading user profile...</div>
-    //error
-    else if (error)
-      return (
-        <>
-          <Alert className="w-100 text-center">
-            Logged out. Please log in again
-          </Alert>
-          <LoginForm />
-        </>
-      )
-    else if (user)
-      return (
-        <>
-          <Container fluid className="justify-content-center">
-            <AccountBox
-              id={this.state.user.id}
-              name={this.state.user.name}
-              surname={this.state.user.surname}
-              email={this.state.user.email}
-              city={this.state.user.city}
-              profilePic={this.state.user.profilePic}
-              items={this.state.user.items}
-            />
-            <Row>
-              <h3>Your items</h3>
-              {user.items.map((item) => (
-                <Col>
-                  <ItemElement
-                    title={item.title}
-                    description={item.description}
-                    pics={item.pics}
-                    user_name={this.state.user.name}
-                    user_surname={this.state.user.surname}
-                    user_city={this.state.user.city}
-                  />
-                </Col>
-              ))}
-            </Row>
-          </Container>
-        </>
-      )
+  if (error || !user) {
+    return (
+      <Container className="text-center mt-5">
+        <Alert variant="info" className="my-3 p-3 text-center w-50 mx-auto">
+          Session expired. Please log in again.
+        </Alert>
+        <LoginForm />
+      </Container>
+    )
   }
+
+  return (
+    <Container fluid className="py-4">
+      <Row className="align-items-top">
+        <Col xs={12} md={2} className="text-center mb-3">
+          {user.profilePic ? (
+            <img
+              src={user.profilePic}
+              alt="Profile picture"
+              className="img-fluid shadow-sm profile-picture"
+            />
+          ) : (
+            <div className="img-fluid shadow-sm dummy-profile-pic mx-auto mb-2"></div>
+          )}
+        </Col>
+
+        <Col xs={12} md={6}>
+          <h3>
+            {user.name} {user.surname}
+          </h3>
+          <h5 className="text-muted">{user.city}</h5>
+          {user.location ? (
+            <div className="w-75 ms-0">
+              <LocationMap lat={user.location.lat} lng={user.location.lng} />
+            </div>
+          ) : (
+            <></>
+          )}
+        </Col>
+
+        <Col xs={12} md={4} className="text-end">
+          <AddButton />
+          <Button className="btn settingsButton mt-1">
+            <FaRegMessage />
+            <span className="label">Check your messages</span>
+          </Button>
+          <Button
+            className="btn settingsButton mt-0"
+            onClick={() => {
+              logout()
+              navigate("/")
+            }}
+          >
+            <FiLogOut />
+            <span className="label">Log out</span>
+          </Button>
+          <Button
+            className="btn settingsButton mt-0"
+            onClick={() => navigate("/account/edit")}
+          >
+            <FaEdit />
+            <span className="label">Edit your profile</span>
+          </Button>
+          <Button className="btn settingsButton mt-0">
+            <MdDelete />
+            <span className="label">Delete your profile</span>
+          </Button>
+        </Col>
+      </Row>
+
+      <hr className="my-5" />
+
+      <Row>
+        <h3 className="mb-4">Your Items ({items.length})</h3>
+
+        {items.length > 0 ? (
+          items.map((item, i) => (
+            <Col xs="12" md="4" className="m-0">
+              <ItemElement item={item} key={i + 1} />
+            </Col>
+          ))
+        ) : (
+          <p className="text-muted">You haven't posted any items yet.</p>
+        )}
+      </Row>
+    </Container>
+  )
 }
 
 export default AccountContainer

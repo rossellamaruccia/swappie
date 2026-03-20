@@ -1,6 +1,6 @@
 import "../../customs.css"
-import LogoButton from "../LogoButton"
-import SearchField from "../SearchField"
+import LogoButton from "./LogoButton"
+import SearchField from "./SearchField"
 import SettingsButton from "./SettingsButton"
 import { Container, Row, Col, Navbar } from "react-bootstrap"
 import AddButton from "./AddButton"
@@ -20,6 +20,7 @@ function HeaderBar() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Col className="buttonsCol">
+<<<<<<< HEAD
                 <div className="icon-container">
                   <AccountButton />
                   <span className="tooltip">Account | Login</span>
@@ -36,6 +37,12 @@ function HeaderBar() {
                   <HelpButton />
                   <span className="tooltip">Help</span>
                 </div>
+=======
+                <AccountButton />
+                <AddButton />
+                <SettingsButton />
+                <HelpButton />
+>>>>>>> feature/geolocation
               </Col>
             </Navbar.Collapse>
           </Col>

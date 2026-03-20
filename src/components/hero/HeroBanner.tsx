@@ -17,7 +17,7 @@ function HeroBanner() {
                   className="btn btn-success py-1 px-2 me-2 mb-2"
                   href="/signup"
                 >
-                  Add items to lend
+                  Subscribe
                 </Button>
                 <Button
                   className="btn btn-outline-success bg-transparent py-1 px-2 me-2 mb-2 fs-6 subscribeButton"

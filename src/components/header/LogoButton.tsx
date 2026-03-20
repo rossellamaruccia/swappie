@@ -1,5 +1,5 @@
 import { Image } from "react-bootstrap"
-import "../customs.css"
+import "../../customs.css"
 
 function LogoButton() {
   return (

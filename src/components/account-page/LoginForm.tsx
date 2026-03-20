@@ -3,6 +3,7 @@ import { Container, Form, Button } from "react-bootstrap"
 import { loggingUser } from "../../api/userApi"
 import { Navigate } from "react-router-dom"
 
+
 const LoginForm = () => {
   const [formValue, setFormValue] = useState({ email: "", password: "" })
 
@@ -10,8 +11,11 @@ const LoginForm = () => {
     event.preventDefault()
     try {
       loggingUser(formValue)
+<<<<<<< HEAD:src/components/account-page/LoginForm.tsx
       console.log("done")
       return <Navigate to="/account" replace />
+=======
+>>>>>>> feature/geolocation:src/components/signup-page/LoginForm.tsx
     } catch(error) {
        return "Something went wrong: " + error
     }
