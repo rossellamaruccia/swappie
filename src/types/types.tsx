@@ -16,9 +16,10 @@ export interface UserLogin {
   password: string
 }
 
-export interface User extends UserLogin {
+export interface User {
   name?: string
   surname?: string
+  email: string
   city?: string
   profilePic?: string | null
   items?: Item[]

@@ -70,3 +70,19 @@ export async function getItemsPerUser(token: string | null): Promise<ItemGetResp
   const itemsData: ItemGetResponse[] = await response.json()
   return itemsData;
 }
+
+export async function getItemsPerCategory(token: string | null, category: string | null): Promise<ItemGetResponse[]> {
+  const response = await fetch(`${API_BASE_URL}/items/feed?category=${category}`, {
+    headers: {
+      Authorization : `Bearer ${token}`,
+    }
+  })
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({
+      //login failed - redirect on loginpage
+    }))
+    throw new Error(errorData.message || "Operation failed")
+  }
+  const itemsData: ItemGetResponse[] = await response.json()
+  return itemsData;
+}
