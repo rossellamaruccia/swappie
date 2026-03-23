@@ -1,9 +1,14 @@
 import { useState, useEffect, type ChangeEvent, type SubmitEvent } from "react"
 import { Container, Form, Button, Alert } from "react-bootstrap"
 import type { User } from "../../types/types"
-import { modifyUser, getUserInfo, updateProfilePic, updateUserLocation } from "../../api/userApi"
+import {
+  modifyUser,
+  getUserInfo,
+  updateProfilePic,
+  updateUserLocation,
+} from "../../api/userApi"
 import { useNavigate } from "react-router-dom"
-import { isTokenValid } from "../../utils/auth"
+import { getAuthStatus } from "../../utils/authTools"
 import LocationPicker from "./LocationPicker"
 import LocationMap from "./LocationMap"
 
@@ -19,7 +24,7 @@ const EditForm = () => {
     city: "",
     location: {
       lng: 0.0,
-      lat: 0.0
+      lat: 0.0,
     },
   })
 
@@ -29,7 +34,7 @@ const EditForm = () => {
 
   useEffect(() => {
     const loadUser = async () => {
-      if (!authToken || !isTokenValid(authToken)) {
+      if (!authToken || !getAuthStatus(authToken)) {
         navigate("/login")
         return
       }
@@ -64,15 +69,15 @@ const EditForm = () => {
     }
   }
 
-    const handleLocationChange = (
-      coords: { lat: number; lng: number } | null,
-    ) => {
-      setUser((prev) => ({
-        ...prev,
-        location: coords ? coords : { lat: 0, lng: 0 },
-      }))
-      updateUserLocation(authToken, user.location!)
-    }
+  const handleLocationChange = (
+    coords: { lat: number; lng: number } | null,
+  ) => {
+    setUser((prev) => ({
+      ...prev,
+      location: coords ? coords : { lat: 0, lng: 0 },
+    }))
+    updateUserLocation(authToken, user.location!)
+  }
 
   const handleSubmit = async (event: SubmitEvent) => {
     event.preventDefault()
@@ -147,11 +152,13 @@ const EditForm = () => {
         <Form.Group className="my-3 p-3 border rounded bg-light">
           <h6>Update my location</h6>
           <LocationPicker onLocationFound={handleLocationChange} />
-          { user.location? (
+          {user.location ? (
             <div className="mt-3">
               <LocationMap lat={user.location.lat} lng={user.location.lng} />
             </div>
-          ) : (<></>)}
+          ) : (
+            <></>
+          )}
         </Form.Group>
 
         <Button variant="success" type="submit" disabled={submitting}>

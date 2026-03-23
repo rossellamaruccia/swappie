@@ -2,7 +2,8 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Container, Row, Col, Button, Alert } from "react-bootstrap"
 import { getUserInfo } from "../../api/userApi"
-import { isTokenValid, logout } from "../../utils/auth"
+import { getAuthStatus } from "../../utils/authTools"
+import { useAuth } from "../../utils/AuthContext"
 import { getItemsPerUser } from "../../api/itemApi"
 import type { ItemGetResponse, User } from "../../types/types"
 import ItemElement from "../body/feed-element/ItemElement"
@@ -19,13 +20,13 @@ const AccountContainer = () => {
   const [items, setItems] = useState<ItemGetResponse[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(false)
-
+ const authentication = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
       const authToken = localStorage.getItem("accessToken")
-      if (!authToken || !isTokenValid(authToken)) {
+      if (!authToken || !getAuthStatus(authToken)) {
         setError(true)
         setIsLoading(false)
         return
@@ -107,7 +108,7 @@ const AccountContainer = () => {
           <Button
             className="btn settingsButton mt-0"
             onClick={() => {
-              logout()
+              authentication.logout()
               navigate("/")
             }}
           >

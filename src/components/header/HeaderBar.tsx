@@ -7,6 +7,7 @@ import AddButton from "./AddButton"
 import HelpButton from "./HelpButton"
 import CategoryButton from "../footer/CategoryButton"
 import AccountButton from "./AccountButton"
+import { Category } from "../../types/types"
 
 function HeaderBar() {
   return (
@@ -32,15 +33,16 @@ function HeaderBar() {
             <SearchField />
           </Col>
           <Col xs="9" md={{ order: 3 }}>
-            <CategoryButton title={{ title: "work tools" }} />
-            <CategoryButton title={{ title: "house maintenance diy" }} />
-            <CategoryButton title={{ title: "gardening" }} />
-            <CategoryButton title={{ title: "music stuff" }} />
-            <CategoryButton title={{ title: "party materials" }} />
-            <CategoryButton title={{ title: "cooking tools" }} />
-            <CategoryButton title={{ title: "crafting" }} />
-            <CategoryButton title={{ title: "woodworking" }} />
-            <CategoryButton title={{ title: "painting" }} />
+            <CategoryButton title={{ title: Category.WORK_TOOLS }} />
+            <CategoryButton title={{ title: Category.HOUSE_MAINTENANCE }} />
+            <CategoryButton title={{ title: Category.DIY }} />
+            <CategoryButton title={{ title: Category.GARDENING }} />
+            <CategoryButton title={{ title: Category.MUSIC_STUFF }} />
+            <CategoryButton title={{ title: Category.PARTY_MATERIAL }} />
+            <CategoryButton title={{ title: Category.COOKING_TOOLS }} />
+            <CategoryButton title={{ title: Category.CRAFTING }} />
+            <CategoryButton title={{ title: Category.WOODWORKING }} />
+            <CategoryButton title={{ title: Category.PAINTING }} />
           </Col>
         </Row>
       </Container>

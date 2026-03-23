@@ -2,8 +2,7 @@ import { useState, useEffect } from "react"
 import { Container, Row, Col, Spinner, Alert } from "react-bootstrap"
 import ItemCard from "./feed-element/ItemElement"
 import type { ItemGetResponse } from "../../types/types"
-import { getAllItems } from "../../api/itemApi"
-
+import { getAllItems, getItemsPerCategory } from "../../api/itemApi"
 
 const FeedContainer = () => {
   const [items, setItems] = useState<ItemGetResponse[]>([])
@@ -11,11 +10,17 @@ const FeedContainer = () => {
   const [error, setError] = useState(false)
 
   const authToken = localStorage.getItem("accessToken")
+  const category = localStorage.getItem("category")
 
   const fetchItems = async () => {
     try {
       setLoading(true)
-      const data = await getAllItems(authToken)
+      let data: ItemGetResponse[] = []
+      if (category != undefined) {
+        data = await getItemsPerCategory(authToken, category)
+      } else {
+        data = await getAllItems(authToken)
+      }
       setItems(data)
     } catch (err) {
       console.error(err)
@@ -29,7 +34,7 @@ const FeedContainer = () => {
     fetchItems()
     // If you need to update location:
     // updateUserLocation(authToken);
-  }, [authToken])
+  }, [authToken, category])
 
   return (
     <Container fluid className="py-4">
