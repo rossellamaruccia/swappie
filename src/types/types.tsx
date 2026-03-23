@@ -16,6 +16,11 @@ export interface UserLogin {
   password: string
 }
 
+export interface LoginResponse{
+  accessToken: string
+  id: UUID | string
+}
+
 export interface User {
   name?: string
   surname?: string
