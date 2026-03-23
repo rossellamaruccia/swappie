@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, Button, Stack } from "react-bootstrap"
 import type { ItemGetResponse } from "../../../types/types"
+//import { useAuth } from "../../../utils/AuthContext"
 
 interface ItemCardProps {
   item: ItemGetResponse
@@ -12,6 +13,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
  
   const isBorrow = item.type === "BORROW"
   const badgeBg = isBorrow ? "info" : "success"
+  //const { activeUser } = useAuth()
 
   return (
     <Card className="h-100 shadow-sm" border={badgeBg}>
@@ -49,7 +51,6 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
         </Card.Text>
 
         <hr />
-
         <Stack direction="horizontal" gap={2} className="mt-auto">
           <Button
             variant="outline-primary"

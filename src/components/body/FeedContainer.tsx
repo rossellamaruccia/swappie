@@ -4,7 +4,6 @@ import ItemCard from "./feed-element/ItemElement"
 import type { ItemGetResponse } from "../../types/types"
 import { getAllItems, getItemsPerCategory } from "../../api/itemApi"
 
-
 const FeedContainer = () => {
   const [items, setItems] = useState<ItemGetResponse[]>([])
   const [loading, setLoading] = useState(true)
@@ -16,10 +15,12 @@ const FeedContainer = () => {
   const fetchItems = async () => {
     try {
       setLoading(true)
-      let data : ItemGetResponse[] = []
+      let data: ItemGetResponse[] = []
       if (category != undefined) {
         data = await getItemsPerCategory(authToken, category)
-      } else { data = await getAllItems(authToken) }
+      } else {
+        data = await getAllItems(authToken)
+      }
       setItems(data)
     } catch (err) {
       console.error(err)
