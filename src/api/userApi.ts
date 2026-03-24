@@ -1,5 +1,5 @@
-const API_BASE_URL : string = import.meta.env.BASE_URL
-
+//const API_BASE_URL : string = import.meta.env.BASE_URL
+import { API_BASE_URL } from "../env-var"
 import type {
   UserLogin,
   User,
