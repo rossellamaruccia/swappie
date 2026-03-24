@@ -4,9 +4,10 @@ import { VscAccount } from "react-icons/vsc"
 function AccountButton() {
   return (
     <>
-          <Button>
-              <VscAccount />
-        </Button>
+      <Button className="settingsButton" href="/account">
+        <VscAccount />
+        <span className="label">Your account</span>
+      </Button>
     </>
   )
 }

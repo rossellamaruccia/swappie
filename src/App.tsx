@@ -1,14 +1,83 @@
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./customs.css"
+import { Container } from "react-bootstrap"
+import HeaderBar from "./components/header/HeaderBar"
+import FooterBar from "./components/footer/FooterBar"
+import FeedContainer from "./components/body/FeedContainer"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import HeroBanner from "./components/hero/HeroBanner"
+import LoginForm from "./components/signup-page/LoginForm"
+import SubscribeForm from "./components/signup-page/SubscribeForm"
+import AccountContainer from "./components/account-page/AccountContainer"
+import AddForm from "./components/add-page/AddForm"
+import { AuthProvider, useAuth } from "./utils/AuthContext"
+import EditForm from "./components/account-page/EditForm"
 
-import './App.css'
-import HeaderBar from './components/header/HeaderBar'
+const PrivateRoute = ({ children }) => {
+  const { activeUser } = useAuth()
+  return activeUser?.id ? children : <Navigate to="/login" />
+}
 
-function App() {
+function AppContent() {
+  const { activeUser } = useAuth()
+  const userId = activeUser?.id
 
   return (
-    <>
+    <Container>
       <HeaderBar />
-    </>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={!userId ? <HeroBanner /> : <FeedContainer />}
+          />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SubscribeForm />} />
+
+          <Route
+            path="/account"
+            element={
+              <PrivateRoute>
+                <AccountContainer />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/account/edit"
+            element={
+              <PrivateRoute>
+                <EditForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add"
+            element={
+              <PrivateRoute>
+                <AddForm />
+              </PrivateRoute>
+            }
+          />
+
+          {/* <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
+            }
+          /> */}
+        </Routes>
+      </BrowserRouter>
+      <FooterBar />
+    </Container>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  )
+}
