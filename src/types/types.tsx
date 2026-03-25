@@ -18,7 +18,6 @@ export interface UserLogin {
 
 export interface LoginResponse{
   accessToken: string
-  id: UUID | string
 }
 
 export interface User {
@@ -61,7 +60,7 @@ export interface Item {
   title: string
   description: string
   pics?: File[]
-  user?: UUID | string
+  user_id?: UUID | string
   type: ItemType
   category: Category
 }
