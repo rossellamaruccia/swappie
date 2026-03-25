@@ -1,5 +1,5 @@
 //const API_BASE_URL : string = import.meta.env.BASE_URL
-import { API_BASE_URL } from "../env-var"
+import { API_BASE_URL } from "./env-var"
 import type { Item, ItemGetResponse } from "../types/types"
 
 export async function addNewItem(token: string | null, body: Item) {
