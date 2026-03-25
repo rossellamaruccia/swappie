@@ -1,4 +1,5 @@
-import { API_BASE_URL } from "../config/constants"
+//const API_BASE_URL : string = import.meta.env.BASE_URL
+import { API_BASE_URL } from "../env-var"
 import type { Item, ItemGetResponse } from "../types/types"
 
 export async function addNewItem(token: string | null, body: Item) {
@@ -11,10 +12,10 @@ export async function addNewItem(token: string | null, body: Item) {
   formData.append("description", body.description)
   formData.append("itemType", body.type)
   formData.append("category", body.category)
-  if(body.pics) body.pics.forEach((file) => {
+  if (body.pics)
+    body.pics.forEach((file) => {
       formData.append("files", file)
-    }
-  )
+    })
 
   const response = await fetch(`${API_BASE_URL}/items/add`, {
     method: "POST",
@@ -29,11 +30,12 @@ export async function addNewItem(token: string | null, body: Item) {
       //login failed - redirect on loginpage
     }))
     throw new Error(errorData.message || "Operation failed")
-  }
-  else return
+  } else return
 }
 
-export async function getAllItems(token: string | null): Promise<ItemGetResponse[]> {
+export async function getAllItems(
+  token: string | null,
+): Promise<ItemGetResponse[]> {
   if (!token) {
     console.error("No token provided")
   }
@@ -54,12 +56,13 @@ export async function getAllItems(token: string | null): Promise<ItemGetResponse
   return itemsData
 }
 
-
-export async function getItemsPerUser(token: string | null): Promise<ItemGetResponse[]> {
+export async function getItemsPerUser(
+  token: string | null,
+): Promise<ItemGetResponse[]> {
   const response = await fetch(`${API_BASE_URL}/items`, {
     headers: {
-      Authorization : `Bearer ${token}`,
-    }
+      Authorization: `Bearer ${token}`,
+    },
   })
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({
@@ -68,7 +71,7 @@ export async function getItemsPerUser(token: string | null): Promise<ItemGetResp
     throw new Error(errorData.message || "Operation failed")
   }
   const itemsData: ItemGetResponse[] = await response.json()
-  return itemsData;
+  return itemsData
 }
 
 export async function getItemDetails(token: string | null, itemID: number): Promise<ItemGetResponse>{
@@ -87,12 +90,18 @@ export async function getItemDetails(token: string | null, itemID: number): Prom
   return item
 }
 
-export async function getItemsPerCategory(token: string | null, category: string | null): Promise<ItemGetResponse[]> {
-  const response = await fetch(`${API_BASE_URL}/items/feed?category=${category}`, {
-    headers: {
-      Authorization : `Bearer ${token}`,
-    }
-  })
+export async function getItemsPerCategory(
+  token: string | null,
+  category: string | null,
+): Promise<ItemGetResponse[]> {
+  const response = await fetch(
+    `${API_BASE_URL}/items/feed?category=${category}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({
       //login failed - redirect on loginpage
@@ -100,10 +109,14 @@ export async function getItemsPerCategory(token: string | null, category: string
     throw new Error(errorData.message || "Operation failed")
   }
   const itemsData: ItemGetResponse[] = await response.json()
-  return itemsData;
+  return itemsData
 }
 
-export async function editItem(token: string | null, item: Item, itemID: number) {
+export async function editItem(
+  token: string | null,
+  item: Item,
+  itemID: number,
+) {
   if (!token) {
     console.error("No token provided")
   }

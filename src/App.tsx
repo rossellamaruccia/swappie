@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./customs.css"
+import React from "react"
 import { Container } from "react-bootstrap"
 import HeaderBar from "./components/header/HeaderBar"
 import FooterBar from "./components/footer/FooterBar"
@@ -14,7 +15,11 @@ import { AuthProvider, useAuth } from "./utils/AuthContext"
 import EditForm from "./components/account-page/EditForm"
 import ItemDetail from "./components/body/feed-element/ItemDetail"
 
-const PrivateRoute = ({ children }) => {
+interface PrivateRouteProps {
+  children: React.ReactNode
+}
+
+const PrivateRoute = ({ children } : PrivateRouteProps) => {
   const { activeUser } = useAuth()
   return activeUser?.id ? children : <Navigate to="/login" />
 }

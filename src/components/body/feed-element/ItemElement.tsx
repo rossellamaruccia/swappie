@@ -1,15 +1,13 @@
 import React from "react"
-import { Card,  Stack } from "react-bootstrap"
+import { Card, Stack } from "react-bootstrap"
 import type { ItemGetResponse } from "../../../types/types"
 import { useNavigate } from "react-router-dom"
 
 interface ItemCardProps {
   item: ItemGetResponse
-  onDelete?: (id: number) => void
-  onEdit?: (id: number) => void
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
+const ItemCard: React.FC<ItemCardProps> = ({item}) => {
  
   const isBorrow = item.type === "BORROW"
   const badgeBg = isBorrow ? "info" : "success"

@@ -1,4 +1,5 @@
-import { API_BASE_URL } from "../config/constants"
+//const API_BASE_URL : string = import.meta.env.BASE_URL
+import { API_BASE_URL } from "../env-var"
 import type {
   UserLogin,
   User,
@@ -7,7 +8,6 @@ import type {
   LoginResponse,
   UserGetResponse
 } from "../types/types"
-
 
 export async function newUser(data: UserSignUpRequest) {
   try {
@@ -123,8 +123,8 @@ export async function updateProfilePic(
   if (!token) {
     console.error("No token provided")
   }
-const formData = new FormData()
-formData.append("profilePic", pic)
+  const formData = new FormData()
+  formData.append("profilePic", pic)
   try {
     const response = await fetch(`${API_BASE_URL}/users/me/edit/profile_pic`, {
       method: "PUT",
@@ -143,21 +143,18 @@ formData.append("profilePic", pic)
   }
 }
 
-export async function modifyUser(
-  token: string | null,
-  payload: User,
-) {
+export async function modifyUser(token: string | null, payload: User) {
   if (!token) {
     console.error("No token provided")
     throw new Error("Please Log in again")
   }
 
-  const data: any = {
-  name: payload.name,
-  surname: payload.surname,
-  email: payload.email,
-  city: payload.city,
-};
+  const data = {
+    name: payload.name,
+    surname: payload.surname,
+    email: payload.email,
+    city: payload.city,
+  }
 
   try {
     const response = await fetch(`${API_BASE_URL}/users/me/edit`, {
@@ -168,7 +165,7 @@ export async function modifyUser(
       },
       body: JSON.stringify(data),
     })
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
@@ -179,7 +176,10 @@ export async function modifyUser(
   }
 }
 
-export async function updateUserLocation(token: string | null, location: Geolocation) {
+export async function updateUserLocation(
+  token: string | null,
+  location: Geolocation,
+) {
   if (!token) {
     console.error("No token provided")
     throw new Error("Please Log in again")
@@ -187,11 +187,11 @@ export async function updateUserLocation(token: string | null, location: Geoloca
 
   const geolocation = {
     lng: location.lng,
-    lat: location.lat
+    lat: location.lat,
   }
 
-  try{
-  const response = await fetch(`${API_BASE_URL}/users/me/edit/location`, {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/me/edit/location`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -199,7 +199,7 @@ export async function updateUserLocation(token: string | null, location: Geoloca
       },
       body: JSON.stringify(geolocation),
     })
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
