@@ -1,19 +1,16 @@
 import React from "react"
-import { Card, Button, Stack } from "react-bootstrap"
+import { Card, Stack } from "react-bootstrap"
 import type { ItemGetResponse } from "../../../types/types"
 //import { useAuth } from "../../../utils/AuthContext"
 
 interface ItemCardProps {
   item: ItemGetResponse
-  onDelete?: (id: number) => void
-  onEdit?: (id: number) => void
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
+const ItemCard: React.FC<ItemCardProps> = ({ item}) => {
  
   const isBorrow = item.type === "BORROW"
   const badgeBg = isBorrow ? "info" : "success"
-  //const { activeUser } = useAuth()
 
   return (
     <Card className="h-100 shadow-sm" border={badgeBg}>
@@ -49,26 +46,6 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onDelete, onEdit }) => {
             ? `${item.description.substring(0, 95)}...`
             : item.description}
         </Card.Text>
-
-        <hr />
-        <Stack direction="horizontal" gap={2} className="mt-auto">
-          <Button
-            variant="outline-primary"
-            size="sm"
-            className="w-100"
-            onClick={() => onEdit?.(item.id)}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="outline-danger"
-            size="sm"
-            className="w-100"
-            onClick={() => onDelete?.(item.id)}
-          >
-            Delete
-          </Button>
-        </Stack>
       </Card.Body>
     </Card>
   )
