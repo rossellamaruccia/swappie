@@ -1,19 +1,24 @@
 import React from "react"
 import { Card, Stack } from "react-bootstrap"
 import type { ItemGetResponse } from "../../../types/types"
-//import { useAuth } from "../../../utils/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 interface ItemCardProps {
   item: ItemGetResponse
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ item}) => {
+const ItemCard: React.FC<ItemCardProps> = ({item}) => {
  
   const isBorrow = item.type === "BORROW"
   const badgeBg = isBorrow ? "info" : "success"
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/detail?itemID=${item.id}`)
+  } 
 
   return (
-    <Card className="h-100 shadow-sm" border={badgeBg}>
+    <Card className="h-100 shadow-sm itemCard" border={badgeBg} onClick={handleClick}>
       <Card.Img
         variant="top"
         src={
@@ -21,7 +26,6 @@ const ItemCard: React.FC<ItemCardProps> = ({ item}) => {
             ? item.pics_urls[0]
             : "src/assets/pexels-wordsurfer-909256.jpg"
         }
-        style={{ height: "150px", objectFit: "cover" }}
       />
 
       <Card.Body className="d-flex flex-column" >
@@ -31,17 +35,18 @@ const ItemCard: React.FC<ItemCardProps> = ({ item}) => {
         >
           <Card.Title
             className="mb-0 text-truncate"
-            style={{ maxWidth: "70%" }}
           >
             {item.title}
           </Card.Title>
-        </Stack>
-
-        <Card.Text className="text-muted small flex-grow-1">
+          <Card.Text className="text-muted small flex-grow-1 text-end">
           <a>{item.type}</a>
           <br/>
           <a>{item.category}</a>
-          <br/>
+            <br />
+            </Card.Text>
+        </Stack>
+
+        <Card.Text>
           {item.description.length > 100
             ? `${item.description.substring(0, 95)}...`
             : item.description}

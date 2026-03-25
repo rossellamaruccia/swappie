@@ -13,6 +13,7 @@ import AccountContainer from "./components/account-page/AccountContainer"
 import AddForm from "./components/add-page/AddForm"
 import { AuthProvider, useAuth } from "./utils/AuthContext"
 import EditForm from "./components/account-page/EditForm"
+import ItemDetail from "./components/body/feed-element/ItemDetail"
 
 interface PrivateRouteProps {
   children: React.ReactNode
@@ -36,6 +37,7 @@ function AppContent() {
             path="/"
             element={!userId ? <HeroBanner /> : <FeedContainer />}
           />
+          <Route path="/detail" element={<ItemDetail />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SubscribeForm />} />
 

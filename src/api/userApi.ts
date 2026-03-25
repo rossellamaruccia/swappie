@@ -1,10 +1,12 @@
 //const API_BASE_URL : string = import.meta.env.BASE_URL
-import { API_BASE_URL } from "../env-var"
+import { API_BASE_URL } from "./env-var"
 import type {
   UserLogin,
   User,
   UserSignUpRequest,
   Geolocation,
+  LoginResponse,
+  UserGetResponse
 } from "../types/types"
 
 export async function newUser(data: UserSignUpRequest) {
@@ -27,9 +29,6 @@ export async function newUser(data: UserSignUpRequest) {
   }
 }
 
-interface LoginResponseDTO {
-  accessToken: string
-}
 
 export async function loggingUser(payload: UserLogin) {
   try {
@@ -45,7 +44,7 @@ export async function loggingUser(payload: UserLogin) {
     const text = await response.text()
 
     if (response.ok) {
-      const data: LoginResponseDTO = JSON.parse(text)
+      const data: LoginResponse = JSON.parse(text)
       localStorage.setItem("accessToken", data.accessToken)
       window.location.href = "/account"
     } else {
@@ -67,7 +66,7 @@ export async function loggingUser(payload: UserLogin) {
   }
 }
 
-export async function getUserInfo(token: string | null): Promise<User> {
+export async function getUserInfo(token: string | null): Promise<UserGetResponse> {
   if (!token) {
     console.error("No token provided")
   }
@@ -82,7 +81,33 @@ export async function getUserInfo(token: string | null): Promise<User> {
     })
 
     if (response.ok) {
-      const data: User = await response.json()
+      const data: UserGetResponse = await response.json()
+      return data
+    } else throw new Error("Login failed")
+  } catch (error) {
+    console.error("Network or parsing error:", error)
+    throw error
+  }
+}
+
+export async function getUserDetails(
+  token: string | null, userID : string | null
+): Promise<UserGetResponse> {
+  if (!token) {
+    console.error("No token provided")
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/details?id=${userID}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (response.ok) {
+      const data: UserGetResponse = await response.json()
       return data
     } else throw new Error("Login failed")
   } catch (error) {
