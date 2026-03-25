@@ -176,16 +176,35 @@ h4{
 }
 
 .profile-picture{
-  width: 150px;
-  height: 150px;
-  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 200px;
   margin: 0 auto;
   padding: 0;
   border: darkgray 2px;
+  object-fit: cover;
 }
 
+.itemCard{
+  border-radius: 0;
+  cursor:pointer;
+}
+
+.itemCard img{
+  height: 60%;
+  object-fit: cover;
+}
+
+.img-fluid{
+  max-height: 70vh;
+}
+
+.itemCard body{
+  height: 40%;
+}
 
 .card-body a{
   font-size: 0.6rem;
   border: 1px solid gray;
+  
 }
