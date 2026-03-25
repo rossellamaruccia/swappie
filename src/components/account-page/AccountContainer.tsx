@@ -6,7 +6,7 @@ import { getUserInfo } from "../../api/userApi"
 import { getAuthStatus } from "../../utils/authTools"
 import { useAuth } from "../../utils/AuthContext"
 import { getItemsPerUser } from "../../api/itemApi"
-import type { ItemGetResponse, Item, User } from "../../types/types"
+import type { ItemGetResponse, Item, UserGetResponse } from "../../types/types"
 import ItemElement from "../body/feed-element/ItemElement"
 import LoginForm from "../signup-page/LoginForm"
 import { FaEdit } from "react-icons/fa"
@@ -14,7 +14,6 @@ import { MdDelete } from "react-icons/md"
 import { FaRegMessage } from "react-icons/fa6"
 import { FiLogOut } from "react-icons/fi"
 import AddButton from "../header/AddButton"
-import LocationMap from "./LocationMap"
 import EditModal from "../body/feed-element/EditModal"
 import { editItem } from "../../api/itemApi"
 
@@ -131,26 +130,29 @@ const AccountContainer = () => {
       <hr className="my-5" />
 
       <Row>
+        <Col xs="8" md="3">
+          <UserDetails user={user} />
+        </Col>
         <Col xs="12" md="9">
           <h3 className="mb-4">Your Items ({items.length})</h3>
 
-        {items.length > 0 ? (
-          items.map((item, i) => (
-            <Col xs="12" md="4" className="m-0">
-              <ItemElement item={item} key={i + 1} />
-              <Button onClick={() => handleEditClick(item)}>Edit item</Button>
-              <EditModal
-                show={showEditModal}
-                handleClose={handleCloseModal}
-                item={item}
-                onSave={handleSaveItem}
-              />
-            </Col>
-          ))
-        ) : (
-          <p className="text-muted">You haven't posted any items yet.</p>
+          {items.length > 0 ? (
+            items.map((item, i) => (
+              <Col xs="12" md="3" className="m-0">
+                <ItemElement item={item} key={i + 1} />
+                <Button onClick={() => handleEditClick(item)} className="settingsButton mt-1">Edit item</Button>
+                <EditModal
+                  show={showEditModal}
+                  handleClose={handleCloseModal}
+                  item={item}
+                  onSave={handleSaveItem}
+                />
+              </Col>
+            ))
+          ) : (
+            <p className="text-muted">You haven't posted any items yet.</p>
           )}
-          </Col>
+        </Col>
       </Row>
     </Container>
   )

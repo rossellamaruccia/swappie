@@ -12,13 +12,13 @@ const UserDetails = ({ user }: ElementProps) => {
       {user ? (
         <Card>
           <Card.Body>
-            <Stack direction="horizontal" gap={2} className="mt-auto mb-2">
-              <Image src={user.profilePic} className="profile-picture mx-1" />
-              <h4>
+            <Stack direction="horizontal" className="mt-auto mb-2">
+              <Image src={user.profilePic!} className="profile-picture mx-1" />
+              <h6>
                 {user.name} {user.surname}, {user.city}
-              </h4>
+              </h6>
             </Stack>
-            <LocationMap lng={user.location?.lng} lat={user.location?.lat} />
+            <LocationMap lng={user.location!.lng} lat={user.location!.lat} />
           </Card.Body>
         </Card>
       ) : (

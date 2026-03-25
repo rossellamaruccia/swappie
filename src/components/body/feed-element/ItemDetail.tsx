@@ -87,14 +87,16 @@ const ItemDetail = () => {
   return (
     <Container>
       <Row>
-        <Col xs="12" md="9">
+        <Col xs="12" md="7">
           <Carousel>
             {itemData?.pics_urls?.map((pic, i = 0) => (
               <Carousel.Item key={i + 1}>
-                <Image fluid src={pic} />
+                <Image fluid src={pic} className="w-100 object-fit-cover"/>
               </Carousel.Item>
             ))}
           </Carousel>
+        </Col>
+        <Col xs="6" md="3" className="mt-2">
           <h2>{itemData?.title}</h2>
           <p>{itemData?.description}</p>
           <br />
@@ -102,7 +104,7 @@ const ItemDetail = () => {
           <br />
           <small>{itemData?.category}</small>
         </Col>
-        <Col xs="12" md="3">
+        <Col xs="6" md="2">
           <UserDetails user={userData!} />
         </Col>
       </Row>
