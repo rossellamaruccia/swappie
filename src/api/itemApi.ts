@@ -39,7 +39,7 @@ export async function getAllItems(
   if (!token) {
     console.error("No token provided")
   }
-  //questa fetch deve restituire tutti gli Items tranne quelli dell'user che fa la richiesta
+  //questa fetch deve restituire tutti gli Items tranne quelli dell'user che fa la richiesta filtrati per distanza
   const response = await fetch(`${API_BASE_URL}/items/feed?radius=${radius}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -93,9 +93,10 @@ export async function getItemDetails(token: string | null, itemID: number): Prom
 export async function getItemsPerCategory(
   token: string | null,
   category: string | null,
+  radius: number | null
 ): Promise<ItemGetResponse[]> {
   const response = await fetch(
-    `${API_BASE_URL}/items/feed?category=${category}`,
+    `${API_BASE_URL}/items/feed?radius=${radius}&category=${category}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

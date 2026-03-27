@@ -19,7 +19,7 @@ const FeedContainer = () => {
       setLoading(true)
       let data: ItemGetResponse[] = []
       if (category != "") {
-        data = await getItemsPerCategory(authToken, category)
+        data = await getItemsPerCategory(authToken, category, radius)
       } else {
         data = await getAllItems(authToken, radius)
       }

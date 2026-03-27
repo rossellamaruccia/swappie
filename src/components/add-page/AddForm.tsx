@@ -26,7 +26,7 @@ const [item, setItem] = useState({
 
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
     setItem((prev) => ({ ...prev, [name]: value }))
