@@ -1,17 +1,18 @@
 import React, { useState } from "react"
-import { Container, Form, Button } from "react-bootstrap"
+import { Container, Form, Button, Alert } from "react-bootstrap"
 import { loggingUser } from "../../api/userApi"
 
 
 const LoginForm = () => {
   const [formValue, setFormValue] = useState({ email: "", password: "" })
+  const [error, setError] = useState(false)
 
   const handleSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault()
     try {
       loggingUser(formValue)
-    } catch(error) {
-       return "Something went wrong: " + error
+    } catch {
+      setError(true)
     }
   }
 
@@ -49,6 +50,7 @@ const LoginForm = () => {
           Login
         </Button>
         <br />
+        {error? (<Alert variant="success" className="mt-3">Something went wrong, try again.</Alert>) : (<></>)}
         <span>Not subscribed yet? </span>
         <a href="/signup">Sign up</a>
       </Form>

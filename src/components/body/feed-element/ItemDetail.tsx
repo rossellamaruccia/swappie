@@ -17,7 +17,6 @@ import {
 import LoginForm from "../../signup-page/LoginForm"
 import UserDetails from "../../account-page/UserDetails"
 import { getUserDetails } from "../../../api/userApi"
-import { useAuth } from "../../../utils/AuthContext"
 
 
 const ItemDetail = () => {
@@ -27,7 +26,6 @@ const ItemDetail = () => {
   const [error, setError] = useState(false)
   const [searchParams] = useSearchParams()
   const itemID = searchParams.get("itemID")
-  const { activeUser } = useAuth()
   const authToken = localStorage.getItem("accessToken")
 
   useEffect(() => {
@@ -53,17 +51,6 @@ const ItemDetail = () => {
     loadItem()
   }, [itemID, authToken])
 
-  const isOwner = Boolean(
-    userData?.id &&
-    activeUser?.id &&
-    String(userData.id) == String(activeUser.id),
-  )
-
-  console.log("Ownership Check:", {
-    userDataId: userData?.id,
-    activeUserId: activeUser?.id,
-    match: isOwner,
-  })
 
   if (loading) {
     return (

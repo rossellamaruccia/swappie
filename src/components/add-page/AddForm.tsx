@@ -26,7 +26,7 @@ const [item, setItem] = useState({
 
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
     setItem((prev) => ({ ...prev, [name]: value }))
@@ -63,7 +63,7 @@ const [item, setItem] = useState({
   }
 
   return (
-    <Container>
+    <Container className="w-75">
       <h2>Upload Item</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
