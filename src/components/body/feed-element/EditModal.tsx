@@ -134,7 +134,6 @@ const handleSubmit = () => {
               <Form.Control
                 type="file"
                 multiple
-                isInvalid={!!error}
                 onChange={handleFileChange}
               />
               <Form.Control.Feedback type="invalid">

@@ -135,23 +135,29 @@ const AccountContainer = () => {
         </Col>
         <Col xs="12" md="9">
           <h3 className="mb-4">Your Items ({items.length})</h3>
-
-          {items.length > 0 ? (
-            items.map((item, i) => (
-              <Col xs="12" md="3" className="m-0">
-                <ItemElement item={item} key={i + 1} />
-                <Button onClick={() => handleEditClick(item)} className="settingsButton mt-1">Edit item</Button>
-                <EditModal
-                  show={showEditModal}
-                  handleClose={handleCloseModal}
-                  item={item}
-                  onSave={handleSaveItem}
-                />
-              </Col>
-            ))
-          ) : (
-            <p className="text-muted">You haven't posted any items yet.</p>
-          )}
+          <Row>
+            {items.length > 0 ? (
+              items.map((item, i) => (
+                <Col xs="12" md="3" className="m-0">
+                  <ItemElement item={item} key={i + 1} />
+                  <Button
+                    onClick={() => handleEditClick(item)}
+                    className="settingsButton mt-1"
+                  >
+                    Edit item
+                  </Button>
+                  <EditModal
+                    show={showEditModal}
+                    handleClose={handleCloseModal}
+                    item={item}
+                    onSave={handleSaveItem}
+                  />
+                </Col>
+              ))
+            ) : (
+              <p className="text-muted">You haven't posted any items yet.</p>
+            )}
+          </Row>
         </Col>
       </Row>
     </Container>

@@ -63,7 +63,7 @@ const [item, setItem] = useState({
   }
 
   return (
-    <Container>
+    <Container className="w-75">
       <h2>Upload Item</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">

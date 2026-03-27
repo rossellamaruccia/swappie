@@ -34,13 +34,13 @@ export async function addNewItem(token: string | null, body: Item) {
 }
 
 export async function getAllItems(
-  token: string | null,
+  token: string | null, radius: number | null
 ): Promise<ItemGetResponse[]> {
   if (!token) {
     console.error("No token provided")
   }
   //questa fetch deve restituire tutti gli Items tranne quelli dell'user che fa la richiesta
-  const response = await fetch(`${API_BASE_URL}/items/feed`, {
+  const response = await fetch(`${API_BASE_URL}/items/feed?radius=${radius}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
